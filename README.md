@@ -1,15 +1,13 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2905
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Bold;\f1\froman\fcharset0 Times-Roman;}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\deftab720
-\pard\pardeftab720\sa280\partightenfactor0
+# Typogrille
 
-\f0\b\fs28 \cf0 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Licence\
-\pard\pardeftab720\sa240\partightenfactor0
+Typogrille est un petit outil que j'ai développé pour faciliter la création de grilles de mise en page dans Adobe InDesign.
 
-\f1\b0\fs24 \cf0 \'a9 2026 Virgile Arlaud. Tous droits r\'e9serv\'e9s.\
-Le code source de Typogrille est mis \'e0 disposition \'e0 titre de consultation. Toute reproduction, modification ou redistribution n\'e9cessite une autorisation pr\'e9alable de l'auteur.\
-}
+L'idée est de pouvoir tester différents formats, marges, interlignages et structures de grille, tout en gardant des repères cohérents entre eux. Les calculs se font automatiquement et un aperçu permet de visualiser le résultat avant de reproduire les réglages dans InDesign.
+
+L'outil fonctionne directement dans le navigateur, sans installation.
+
+### Licence
+
+© 2026 Virgile Arlaud. Tous droits réservés.
+
+Le code source est accessible à titre de consultation. Toute reproduction, modification ou redistribution nécessite mon autorisation préalable.
