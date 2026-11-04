@@ -1,0 +1,1176 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Typogrille — Virgile Arlaud</title>
+<meta name="author" content="Virgile Arlaud">
+<meta name="description" content="Construire une grille de mise en page pour InDesign.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#242227;--side:#302d33;--panel:#37343b;--panel2:#29262d;--line:#514b55;--txt:#f0edf1;--muted:#b0a9b4;--pink:#ef5796;--pink-low:#6b354e;--blue:#60ace1;--orange:#eab074;--violet:#c0a0ed;--ok:#a5d5c0;--alert:#f9bb85}
+*{box-sizing:border-box}html,body{height:100%;margin:0;font:13px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--txt)}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid #f9a5c7;outline-offset:2px}button:disabled{opacity:.45;cursor:default}[hidden]{display:none!important}
+header{height:58px;display:flex;justify-content:space-between;align-items:center;padding:0 20px;gap:12px;border-bottom:1px solid #524851;background:#2d2a30}header .identity{display:flex;align-items:center;gap:11px}.idmark{width:33px;height:33px;border:1px solid #c45084;background:#431d32;color:#ff9dcc;display:grid;place-items:center;border-radius:7px;font:700 23px Georgia,serif}h1{font-size:16px;line-height:1;margin:0;font-weight:730;letter-spacing:-.2px}.subtitle{color:var(--muted);font-size:10px;margin-top:3px}.small-btn{border:1px solid #796e78;background:#444049;color:var(--txt);border-radius:7px;padding:7px 10px;font-size:11px}
+.preset-nav{display:flex;gap:5px;align-items:center;justify-content:flex-end;min-width:0;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;white-space:nowrap}.preset-nav::-webkit-scrollbar{display:none}.preset-btn{flex:0 0 auto;padding:7px 9px;font-size:10.5px;background:#35313a;border-color:#625762}.preset-btn.active{background:#65344e;border-color:#ef5796;color:#ffe8f1}.preset-btn:hover:not(.active){border-color:#ba7898;background:#4b3c49}
+@media(max-width:820px){header{height:94px;align-items:stretch;flex-direction:column;justify-content:center;padding:8px 14px;gap:6px}.preset-nav{width:100%;justify-content:flex-start}.preset-btn{padding:6px 9px}.workspace{height:auto}}
+.workspace{height:calc(100dvh - 58px);display:grid;grid-template-columns:minmax(286px,323px) minmax(310px,1fr) minmax(275px,312px);max-width:1750px;margin:auto}.sidebar{overflow-y:auto;min-height:0;scrollbar-color:#6f616a transparent;scrollbar-width:thin;background:var(--side);padding:19px 17px 30px}.controls{border-right:1px solid var(--line)}.results{border-left:1px solid var(--line)}.pane-title{font-size:18px;letter-spacing:-.3px;margin:0 0 14px}
+section.control{padding:16px 0 9px;border-top:1px solid var(--line)}section.control:first-of-type{padding-top:4px;border-top:0}.section-title{display:flex;align-items:center;gap:8px;margin:0 0 13px;font-size:12.5px;font-weight:720}.index{display:grid;place-items:center;width:22px;height:22px;background:#4f3445;border:1px solid #704359;color:#ffb1d0;border-radius:6px;font-size:11px}.auto-badge{font-size:9px;letter-spacing:.045em;font-weight:750;display:inline-flex;align-items:center;padding:3px 6px;border-radius:4px;color:#ffd8e8;background:#713c55;border:1px solid #a35c7e}.auto-badge.small{font-size:9px;padding:1px 4px}
+.field{display:block;min-width:0;margin:0 0 10px}.field>span,.field-head{display:flex;align-items:center;justify-content:space-between;gap:7px;font-size:11px;color:#c7bfca;margin-bottom:5px;font-weight:650}.field input,.field select{height:35px;width:100%;border:1px solid #625864;border-radius:7px;background:#252329;color:#f8f3f8;padding:0 10px;outline:none;min-width:0;font-variant-numeric:tabular-nums}.field input:focus,.field select:focus{border-color:var(--pink);box-shadow:0 0 0 2px #ef57962a}.field input.invalid{border-color:#e6a07e}.field select option{background:#302d33;color:#fff}.row2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.format-row{display:grid;grid-template-columns:1fr 91px;gap:9px}.orient{display:flex;height:35px;border:1px solid #655a66;border-radius:7px;background:#252329;gap:3px;padding:3px}.orient button{border:0;color:#aaa0ac;background:transparent;flex:1;border-radius:5px;font-size:17px}.orient button.active{background:var(--pink-low);color:#ffdaea}.control-strip{display:flex;align-items:center;justify-content:space-between;margin:-3px 0 4px}.unit-group{display:flex;gap:2px;border:1px solid #615862;background:#252329;padding:2px;border-radius:7px}.unit-group button{color:#c4bcc7;background:transparent;border:0;padding:4px 12px;border-radius:4px;font-size:11px}.unit-group button.active{color:#fff;background:#874262;font-weight:700}.number{position:relative}.number input{padding-right:34px}.suffix{position:absolute;right:9px;top:50%;transform:translateY(-50%);font-size:10px;color:#a59ba7;pointer-events:none}.hint{font-size:10.5px;color:var(--muted);margin:2px 0 9px;line-height:1.45}.warning{color:var(--alert)}
+.margin-band{margin:-3px 0 10px;padding:8px 10px;background:#29262e;border:1px solid #5a4c58;border-radius:7px;font-variant-numeric:tabular-nums}.margin-band-main{display:flex;justify-content:space-between;align-items:baseline;gap:6px;font-size:10.5px;color:#c9bfcb}.margin-band-main strong{font-size:11px;color:#ffb3d1;font-weight:750;white-space:nowrap}.margin-band-limits{display:flex;justify-content:space-between;flex-wrap:wrap;gap:3px 8px;margin-top:4px;color:#a89ead;font-size:10px}.margin-band-limits b{color:#e3d3df;font-weight:600}.margin-band[hidden]{display:none}
+.shape-control{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:11px}.shape-control button{height:35px;border:1px solid #645763;background:#302d33;color:#d4c7d3;border-radius:6px;font-size:11px;font-weight:600}.shape-control button.active{border-color:var(--pink);background:#60344a;color:#fff}.shape-note{margin:0 0 12px;font-size:10.5px;color:var(--muted)}.shape-note strong{color:#ffb3d1}.fix-btn{margin:8px 0 0;border:1px solid #bc7193;background:#573449;color:#ffe1ed;border-radius:5px;padding:6px 8px;font-size:11px;font-weight:650}
+.mode-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-bottom:12px}.mode-grid button{min-width:0;border-radius:8px;border:1px solid #675b68;background:#322e35;color:#cec5d0;padding:9px 5px;min-height:61px;font-weight:700;font-size:11px}.mode-grid button.active{border:1px solid var(--pink);background:#5a3448;color:#fff;box-shadow:inset 0 0 0 1px #bf5982}.mode-grid button small{display:block;font-size:9px;font-weight:400;margin-top:4px;color:#bcb0be}.mode-grid button.active small{color:#f5c9da}.density{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:12px}.density button{height:35px;border-radius:6px;border:1px solid #625763;background:#302d33;color:#c9becb;font-size:10px}.density button.active{background:#60344a;border-color:#e55e99;color:#fff}.conditional{border:1px solid #5d515f;border-radius:9px;padding:11px 11px 3px;margin:9px 0 5px;background:#332d35}.conditional .field{margin-bottom:10px}details{border:1px solid #5b515c;background:#322e35;border-radius:9px;margin:10px 0;padding:0 10px}details>summary{cursor:pointer;font-size:11px;color:#e3cad9;font-weight:700;padding:11px 0}details .detail-body{border-top:1px solid #544a55;padding:10px 0 2px}.check{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;color:#d1c7d3;margin:3px 0 9px}.check input{accent-color:var(--pink)}.muted-value{font-size:10.5px;color:var(--muted);margin:-3px 0 9px}.auto-select-wrap select{border-color:#a3537e;color:#ffe4f0}.auto-lead{font-weight:700}.text-action{border:0;background:transparent;color:#ffabd0;font-size:10px;padding:2px 0 8px;cursor:pointer}.stepper{display:flex;align-items:center;gap:4px}.stepper .field{flex:1;margin-bottom:0}.stepper button{height:35px;min-width:28px;border:1px solid #725468;background:#4f3445;color:#ffd6e8;border-radius:6px}.note{color:var(--muted);font-size:10px;line-height:1.5;margin-top:7px}
+.preview-panel{display:flex;flex-direction:column;min-height:0;overflow:hidden;background:#242127;padding:17px;gap:10px}.preview-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.preview-head h2{font-size:17px;margin:0 0 3px}.preview-head p{font-size:11px;margin:0;color:#b7acb9}.status-pill{border:1px solid #577866;color:#acdec3;background:#314a3e;font-size:10px;border-radius:99px;padding:5px 9px;font-weight:700;white-space:nowrap}.status-pill.error{background:#503b35;color:#ffd1b9;border-color:#896047}.page-viewport{display:flex;align-items:center;justify-content:center;flex:1;min-height:0;border:1px solid #504752;border-radius:12px;background:radial-gradient(ellipse,#38343c,#28252b);padding:15px;overflow:hidden}.page-viewport svg{width:100%;height:100%;filter:drop-shadow(0 7px 15px #09080a88)}.legend{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}.legend-items{display:flex;gap:9px;flex-wrap:wrap}.legend-items span{display:inline-flex;gap:5px;align-items:center;font-size:10px;color:#beb3c2}.line{width:12px;height:2px;border-radius:2px}.view-buttons{display:flex;gap:5px}.view-buttons button{border:1px solid #645966;background:#3b353f;border-radius:5px;padding:5px 7px;font-size:10px;color:#d5cbd6}.view-buttons button[aria-pressed=true]{background:#6a3d55;color:#fff;border-color:#b05b80}
+.results .pane-title{margin-bottom:9px}.display-options{display:flex;align-items:center;margin:0 0 12px}.display-options .check{margin:0;font-size:11px;color:#c8beca}.copy{background:#c94b82;border:1px solid #ea83ad;color:#fff;border-radius:7px;font-size:11px;font-weight:750;padding:11px;width:100%;margin-bottom:12px}.info{font-size:11px;line-height:1.5;border:1px solid #4a7661;background:#304339;color:#bfe3d2;border-radius:8px;padding:10px;margin-bottom:12px}.info.error{background:#4a3632;border-color:#865642;color:#ffd1bd}.result-group{margin:16px 0 0}.result-group h3{font-size:12px;margin:0 0 5px;border-bottom:1px solid #514a55;padding-bottom:8px;color:#faf5f8}.result-row{display:flex;gap:8px;justify-content:space-between;align-items:baseline;padding:6px 0;font-size:11px}.result-row>span{color:#b5acb9}.result-row output{max-width:62%;text-align:right;font-variant-numeric:tabular-nums;font-weight:700;color:#f8f0f8;overflow-wrap:anywhere}.result-row.featured output{color:#ff9fc7;font-size:12px}.more{margin-top:15px}.more p{font-size:10.5px;color:#c0b4c0;line-height:1.55}.more strong{color:#eee1ed}
+@media(max-width:1100px){.workspace{grid-template-columns:minmax(244px,290px) minmax(280px,1fr) minmax(244px,280px)}.sidebar{padding:16px 12px 28px}.preview-panel{padding:12px}.legend-items{gap:6px}.mode-grid button{font-size:10px}}
+@media(max-width:820px){html,body{height:auto;min-height:100%}.workspace{height:auto;display:flex;flex-direction:column}.controls{border-right:0;border-bottom:1px solid var(--line)}.sidebar{overflow:visible}.preview-panel{height:70dvh;min-height:390px}.results{border-left:0;border-top:1px solid var(--line)}.controls,.results{padding:18px 17px}.mode-grid button{font-size:11px}}
+
+/* ──────────────────────────────────────────────
+   Typogrille — interface
+   © 2026 Virgile Arlaud · github.com/virgile-fr
+   ────────────────────────────────────────────── */
+:root {
+  --bg: #1f1e21;
+  --side: #29282b;
+  --panel: #302e32;
+  --panel2: #242327;
+  --line: #48444b;
+  --txt: #f0edf0;
+  --muted: #a9a3ad;
+  --pink: #d65b8d;
+  --pink-low: #563143;
+  --blue: #60ace1;
+  --orange: #eab074;
+  --violet: #c0a0ed;
+  --ok: #a5d5c0;
+  --alert: #f9bb85;
+}
+html, body { font-size: 13px; line-height: 1.45; background: var(--bg); }
+button, input, select { font: inherit; }
+button, a, input, select { -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; }
+a:hover { color: #f4acd0; }
+header {
+  height: 60px;
+  padding: 0 21px;
+  background: #252428;
+  border-bottom: 1px solid var(--line);
+}
+header .identity { gap: 12px; flex: 0 0 auto; }
+.idmark { width: 3px; height: 24px; background: var(--pink); display: block; border: 0; border-radius: 0; }
+h1 { font-size: 17px; font-weight: 640; line-height: 1; letter-spacing: -.5px; }
+.preset-nav { gap: 0; align-self: stretch; }
+.preset-btn, .small-btn {
+  border: 0;
+  background: transparent;
+  padding: 0 10px;
+  border-radius: 0;
+  font-size: 11px;
+  color: #bcb7c0;
+}
+.preset-btn { border-bottom: 2px solid transparent; padding-top: 2px; }
+.preset-btn:not(:last-child) { border-right: 1px solid #3e3a41; }
+.preset-btn.active { background: transparent; border-color: transparent; border-bottom-color: var(--pink); color: #f5eaf0; }
+.preset-btn:hover:not(.active) { border-color: transparent; border-bottom-color: #8e7281; color: #f5eaf0; background: #302c32; }
+.workspace { height: calc(100dvh - 60px); grid-template-columns: minmax(285px, 322px) minmax(300px, 1fr) minmax(276px, 326px); max-width: none; }
+.sidebar { background: var(--side); padding: 22px 19px 24px; }
+.pane-title { margin: 0 0 18px; font-size: 15px; font-weight: 650; letter-spacing: -.2px; }
+section.control { padding: 18px 0 10px; }
+section.control:first-of-type { padding-top: 2px; }
+.section-title { margin: 0 0 14px; font-size: 12px; font-weight: 660; gap: 11px; }
+.index {
+  width: 20px;
+  height: auto;
+  display: inline-block;
+  color: #b885a1;
+  font: 500 10px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+.auto-badge, .auto-badge.small {
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  padding: 0 0 0 7px;
+  border-left: 2px solid var(--pink);
+  font: 650 9px/1.3 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: .04em;
+  color: #e3a4c1;
+}
+.field { margin-bottom: 11px; }
+.field>span, .field-head { font-size: 11px; color: #bbb5be; font-weight: 550; margin-bottom: 6px; }
+.field input, .field select {
+  height: 36px;
+  background: #222126;
+  border: 1px solid #565059;
+  border-radius: 4px;
+  padding-left: 10px;
+  font-weight: 480;
+}
+.field input:focus, .field select:focus { box-shadow: none; border-color: #d65b8d; }
+.field input.invalid { border-color: var(--alert); }
+.orient, .unit-group { border-radius: 4px; background: #222126; border-color: #565059; }
+.orient { height: 36px; }
+.orient button, .unit-group button { border-radius: 2px; }
+.orient button.active, .unit-group button.active { background: #60374b; color: #fff; }
+.hint { color: #a69eaa; line-height: 1.4; }
+.mode-grid { gap: 1px; background: #514a53; border: 1px solid #514a53; margin-bottom: 15px; }
+.mode-grid button {
+  background: #2a272d;
+  border: 0 !important;
+  border-radius: 0;
+  box-shadow: none !important;
+  color: #d7cdd5;
+  text-align: left;
+  min-height: 59px;
+  padding: 10px 12px;
+  font-weight: 550;
+  font-size: 11px;
+}
+.mode-grid button:before {
+  content: '';
+  display: inline-block;
+  height: 6px;
+  width: 6px;
+  border: 1px solid #82727f;
+  border-radius: 50%;
+  margin-right: 7px;
+  vertical-align: 1px;
+}
+.mode-grid button small { margin: 5px 0 0 13px; font-size: 10px; color: #938b95; }
+.mode-grid button.active { background: #3b2a35; color: #fff; }
+.mode-grid button.active:before { border-color: var(--pink); background: var(--pink); }
+.mode-grid button.active small { color: #c9a6b6; }
+.density { gap: 0; border-bottom: 1px solid var(--line); margin-bottom: 13px; }
+.density button { height: 32px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: transparent; color: var(--muted); }
+.density button.active { background: transparent; border-color: var(--pink); color: #f3eaf0; }
+.conditional { padding: 2px 0 0; margin: 0; border: 0; border-radius: 0; background: transparent; }
+.conditional .hint { margin-top: 2px; }
+#manualMargins { padding-top: 8px; }
+.margin-band { padding: 9px 0; background: transparent; border: 0; border-top: 1px solid #454049; border-radius: 0; margin: 0 0 12px; }
+.margin-band-main strong { color: #f0d8e4; font-weight: 600; }
+.margin-band-limits { color: #988e9b; }
+details { background: transparent; border: 0; border-radius: 0; border-top: 1px solid var(--line); padding: 0; margin: 12px 0; }
+details>summary { color: #d6c8d1; font-size: 11px; font-weight: 580; padding: 10px 0; }
+details .detail-body { padding: 12px 0 0; border-top: 1px solid #433e45; }
+.shape-control { gap: 1px; background: #514a53; border: 1px solid #514a53; }
+.shape-control button { border: 0; border-radius: 0; background: #2a272d; color: #cec2cd; }
+.shape-control button.active { background: #493142; color: #fff; }
+.shape-note { color: #b1a6b1; }
+.shape-note strong { color: #f0d5e3; }
+.check { color: #bfb8c2; font-size: 11px; }
+.check input { accent-color: var(--pink); }
+.auto-select-wrap select { color: #f4d5e4; }
+.text-action { color: #e5a2c1; text-decoration: underline; text-underline-offset: 3px; }
+.preview-panel { background: #202024; padding: 22px 24px 14px; gap: 12px; }
+.preview-head { align-items: center; }
+.preview-head h2 { font-size: 15px; font-weight: 650; margin-bottom: 4px; }
+.preview-head p { color: #aaa4b0; font-size: 11px; }
+.status-pill { display: flex; gap: 7px; align-items: center; color: #acb7ad; border: 0; background: none; padding: 0; border-radius: 0; font-size: 10px; font-weight: 570; }
+.status-pill:before { content:''; width: 6px; height: 6px; background: #80b7a0; border-radius: 50%; }
+.status-pill.error { color: #f5b99c; border: 0; background: none; }
+.status-pill.error:before { background: #f2a17d; }
+.page-viewport { border: 1px solid #38353c; border-radius: 2px; background: #1b1a1e; padding: 18px; }
+.page-viewport svg { filter: drop-shadow(0 3px 12px #0007); }
+.legend { gap: 8px; }
+.legend-items { gap: 13px; }
+.legend-items span { font-size: 10px; color: #aaa2af; }
+.line { height: 2px; width: 11px; border-radius: 0; }
+.view-buttons { gap: 0; border: 1px solid #48424c; }
+.view-buttons button { border: 0; border-radius: 0; background: transparent; color: #b4a9b6; padding: 6px 9px; }
+.view-buttons button:not(:last-child) { border-right: 1px solid #48424c; }
+.view-buttons button[aria-pressed=true] { background: #41303c; border-color: #48424c; color: #f7e5ef; }
+.signature { border-top: 1px solid #3d393f; padding-top: 10px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; color: #807b85; gap: 7px; font-size: 10px; }
+.signature a { color: #b8a6b4; }
+.signature a:hover { color: #f0b2d0; }
+.signature-sep { display: none; }
+.results .pane-title { margin-bottom: 12px; }
+.display-options { margin-bottom: 11px; }
+.copy { background: #4f2c40; color: #f8eaf1; border: 1px solid #a85579; border-radius: 4px; font-size: 11px; font-weight: 620; padding: 10px; }
+.copy:hover:not(:disabled) { background: #65364e; }
+.info { background: transparent; color: #c4b1ba; border: 0; border-left: 2px solid #76616c; padding: 2px 0 2px 10px; border-radius: 0; }
+.info.error { background: transparent; color: #f5c1a8; border: 0; border-left: 2px solid #d78964; }
+.result-group { margin-top: 19px; }
+.result-group h3 { font-weight: 620; font-size: 11px; color: #e4dbe2; border-bottom-color: #514953; padding-bottom: 8px; }
+.result-row { padding: 6px 0; }
+.result-row>span { color: #aaa3ad; }
+.result-row output { color: #e8e3e9; font-weight: 590; }
+.result-row.featured output { color: #efa0c4; }
+.more { margin-top: 19px; }
+.fix-btn { background: transparent; color: #f0b2cd; border: 1px solid #896077; border-radius: 3px; }
+@media (max-width: 1150px) {
+  .workspace { grid-template-columns: minmax(250px, 290px) minmax(270px, 1fr) minmax(250px, 285px); }
+  .sidebar { padding: 19px 14px 22px; }
+  .preview-panel { padding: 17px 14px 12px; }
+}
+@media (max-width: 820px) {
+  header { height: 94px; padding: 9px 15px 0; gap: 4px; }
+  .preset-nav { gap: 0; height: 37px; align-self: auto; }
+  .preset-btn { padding: 0 9px; }
+  .workspace { height: auto; }
+  .controls, .results { padding: 18px 18px 26px; }
+  .preview-panel { height: 72dvh; min-height: 390px; padding: 16px; }
+  .signature { padding-top: 7px; }
+}
+
+
+/* Typographie et choix actifs */
+.section-title {color:#e89abc}
+h1 {color:#e89abc}
+header .identity {gap:0}
+.section-title .index {color:#8e858f}
+.result-group h3 {color:#e3a0bf}
+.pane-title {color:#f2edf0}
+.auto-badge,.auto-badge.small {border-left:0;padding:0;color:#e6a4c2}
+.preset-btn.active {background:transparent!important;color:var(--pink)!important;border-bottom-color:transparent!important;font-weight:680}
+.preset-btn:hover:not(.active) {color:#f0d0e0}
+.info,.info.error {border-left:0;padding-left:0}
+.calculation-modes {display:grid;grid-template-columns:1fr 1fr;border:1px solid #554b55;background:#242128;gap:1px;margin:0 0 11px}
+.calculation-modes button {padding:10px 6px;border:0;border-radius:0;background:#2b282f;color:#bcb1be;font-size:11px;font-weight:550}
+.calculation-modes button.active {background:#40313d;color:#f1a6c8;font-weight:690}
+.calculation-modes button:focus-visible {outline-offset:-2px}
+.calculation-note {font-size:10px;color:#c9b6c2;margin:0 0 10px;line-height:1.5}
+#reserveRow output{color:#e3a0bf} #guideExplain:empty{display:none}
+
+
+/* Tolérance du mode Valeurs simples */
+.tolerance-row {display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 2px;font-size:11px;color:#d4c5d0}
+.tolerance-row .number {width:94px;flex:0 0 94px}
+.tolerance-row input {height:31px;width:100%;padding:0 28px 0 9px;background:#252329;border:1px solid #625864;border-radius:5px;color:#f6eaf0;font:600 11px inherit;font-variant-numeric:tabular-nums;outline:0}
+.tolerance-row input:focus {border-color:var(--pink)}
+.tolerance-row input:invalid {border-color:#bd785e}
+.tolerance-row .suffix {font-size:10px;right:8px}
+.tolerance-help {font-size:10px;color:#a59aa7;margin:0 0 12px}
+#toleranceRow[hidden],#toleranceHelp[hidden] {display:none}
+
+/* Contrôle des repères : loupe désactivée au départ */
+.page-viewport{position:relative}
+.page-viewport #paper{cursor:default}
+.page-viewport.zoom-enabled #paper{cursor:crosshair}
+.zoom-lens{position:absolute;z-index:10;width:192px;height:192px;border-radius:50%;overflow:hidden;border:2px solid #8fa8be;background:#fff;box-shadow:0 5px 23px #000a;pointer-events:none;display:none}
+.zoom-lens.visible{display:block}
+.zoom-lens svg{display:block;width:100%;height:100%}
+.zoom-lens .zoom-value{position:absolute;left:0;right:0;bottom:0;text-align:center;padding:7px 5px 10px;font:600 10px/1.3 ui-monospace,SFMono-Regular,monospace;letter-spacing:.01em;color:#fff;background:linear-gradient(transparent,#1d2533e8)}
+.view-buttons #toggleZoom{border-color:#716876}
+.view-buttons #toggleZoom[aria-pressed=true]{border-color:#a1b7d5;background:#3c5163;color:#fff}
+.view-buttons #shuffleComposition{color:#d2a9bd;padding-inline:12px;border-left:1px solid #48424c}
+.view-buttons #shuffleComposition:hover{color:#f7d7e6;background:#4b3341}
+.font-kind{display:inline-block;margin-left:7px;font-size:10px;color:#c7adbc;font-weight:450}
+@media(max-width:820px){.zoom-lens{width:164px;height:164px}.view-buttons{flex-wrap:wrap;justify-content:flex-end}.view-buttons button{padding:6px 7px;font-size:10px}.view-buttons #shuffleComposition{padding-inline:8px}}
+
+
+/* Les guides orange représentent « Créer des repères > Aux marges ».
+   Les limites idéales restent en pointillé gris quand elles divergent. */
+.zoom-lens .zoom-value { font-size: 10px; line-height: 1.45; padding-bottom: 12px; }
+</style>
+</head>
+<body>
+<!-- © 2026 Virgile Arlaud · github.com/virgile-fr -->
+<header><div class="identity"><h1>Typogrille</h1></div>
+<nav class="preset-nav" aria-label="Exemples de mise en page">
+ <button type="button" class="small-btn preset-btn active" id="reset" aria-pressed="true" title="Retrouver le modèle A4 avec les marges InDesign à 12,7 mm">A4 · InDesign</button>
+ <button type="button" class="small-btn preset-btn" data-example="a4-report" aria-pressed="false" title="Deux colonnes · Rapport illustré">A4 · Rapport</button>
+ <button type="button" class="small-btn preset-btn" data-example="a4-magazine" aria-pressed="false" title="Trois colonnes · Magazine">A4 · Magazine</button>
+ <button type="button" class="small-btn preset-btn" data-example="artbook-240" aria-pressed="false" title="240 × 320 mm · Beau livre · 4 colonnes × 6 rangées">24 × 32 · Beau livre</button>
+ <button type="button" class="small-btn preset-btn" data-example="b4-magazine" aria-pressed="false" title="B4 ISO · 250 × 353 mm · Magazine · 6 colonnes × 8 rangées (texte sur 2 ou 3 colonnes)">B4 · Magazine</button>
+ <button type="button" class="small-btn preset-btn" data-example="a3-poster" aria-pressed="false" title="Quatre colonnes · Affiche ou portfolio">A3 · Affiche</button>
+ <button type="button" class="small-btn preset-btn" data-example="a5-book" aria-pressed="false" title="Une colonne · Roman">A5 · Roman</button>
+ <button type="button" class="small-btn preset-btn" data-example="trade-book" aria-pressed="false" title="6 × 9 pouces · Essai">6 × 9 · Essai</button>
+</nav></header>
+<main class="workspace">
+<aside class="sidebar controls">
+ <h2 class="pane-title">Réglages</h2>
+ <section class="control">
+  <div class="section-title"><span class="index">01</span> Format du document</div>
+  <div class="format-row"><label class="field"><span>Format de page</span><select id="format"><option value="A4">A4</option><option value="A5">A5</option><option value="art240">24 × 32 cm</option><option value="B4">B4 ISO</option><option value="A3">A3</option><option value="letter">US Letter</option><option value="custom">Personnalisé</option></select></label><div><span class="field-head">Orientation</span><div class="orient"><button type="button" id="portrait" aria-label="Portrait" aria-pressed="true">▯</button><button type="button" id="landscape" aria-label="Paysage" aria-pressed="false">▭</button></div></div></div>
+  <div class="row2"><label class="field"><span>Largeur</span><div class="number"><input id="pageW" data-n="mm" inputmode="decimal"><span class="suffix" data-unit>mm</span></div></label><label class="field"><span>Hauteur</span><div class="number"><input id="pageH" data-n="mm" inputmode="decimal"><span class="suffix" data-unit>mm</span></div></label></div>
+  <div class="control-strip"><span class="hint">Unités</span><div class="unit-group"><button id="mm" type="button">mm</button><button id="pt" type="button">pt</button></div></div>
+ </section>
+ <section class="control">
+  <div class="section-title"><span class="index">02</span> Marges <span class="auto-badge" id="marginAutoBadge">AUTO</span></div>
+  <div class="mode-grid" role="group" aria-label="Gestion des marges"><button type="button" data-mode="auto">Automatiques<small>Marges calculées</small></button><button type="button" data-mode="zero">Sans marges<small>0 mm partout</small></button><button type="button" data-mode="manual">Manuelles<small>Marges fixes</small></button><button type="button" data-mode="indesign">InDesign<small>12,7 mm partout</small></button></div>
+  <div id="autoMargins">
+   <div class="density" role="group" aria-label="Occupation de la page"><button type="button" data-density="compact">Compacte</button><button type="button" data-density="balanced">Équilibrée</button><button type="button" data-density="airy">Aérée</button></div>
+   <label class="field"><span>Marge visée</span><div class="number"><input id="target" data-n="mm" inputmode="decimal"><span class="suffix" data-unit>mm</span></div></label>
+   <div class="margin-band" id="marginBand" title="Les valeurs indiquent le prochain changement de hauteur des rangées.">
+    <div class="margin-band-main"><span id="retainedLabel">Marges obtenues</span><strong id="retainedValue"></strong></div>
+    <div class="margin-band-limits"><span id="lowerThreshold"></span><span id="upperThreshold"></span></div>
+   </div>
+   <details id="advanced"><summary>Réglages des marges</summary><div class="detail-body">
+    <label class="field"><span>Répartition</span><select id="distribution"><option value="balanced">Haut / Bas égaux</option><option value="top-fixed">Haut fixe, ajuster le bas</option><option value="bottom-fixed">Bas fixe, ajuster le haut</option><option value="all-equal">Quatre marges égales</option></select></label>
+    <div id="horizontalBlock"><label class="field"><span>Petit fond / Grand fond</span><div class="number"><input id="horizontal" data-n="mm" inputmode="decimal"><span class="suffix" data-unit>mm</span></div></label></div>
+   </div></details>
+  </div>
+  <div id="zeroMargins" class="conditional" hidden><p class="hint">Toutes les marges à 0.</p></div>
+  <div id="indesignMargins" class="conditional" hidden><p class="hint">12,7 mm sur les quatre côtés.</p></div>
+  <div id="manualMargins" class="conditional" hidden>
+   <div class="row2"><label class="field"><span>De tête</span><div class="number"><input id="top" data-n="mm" inputmode="decimal"><span class="suffix" data-unit>mm</span></div></label><label class="field"><span>De pied</span><div class="number"><input id="bottom" data-n="mm" inputmode="decimal"><span class="suffix" data-unit>mm</span></div></label></div>
+   <div class="row2"><label class="field"><span>Petit fond</span><div class="number"><input id="inside" data-n="mm" inputmode="decimal"><span class="suffix" data-unit>mm</span></div></label><label class="field"><span>Grand fond</span><div class="number"><input id="outside" data-n="mm" inputmode="decimal"><span class="suffix" data-unit>mm</span></div></label></div>
+  </div>
+ </section>
+ <section class="control"><div class="section-title"><span class="index">03</span> Typographie</div>
+  <div class="row2">
+   <label class="field"><span>Corps</span><div class="number"><input id="fontPt" data-n="pt" inputmode="decimal"><span class="suffix">pt</span></div></label>
+   <div id="manualLeading"><label class="field"><span>Interlignage</span><div class="number"><input id="leadingPt" data-n="pt" inputmode="decimal"><span class="suffix">pt</span></div></label></div>
+   <div id="automaticLeading" hidden><label class="field"><span>Interlignage <span class="auto-badge small">AUTO</span></span><select id="leadingChoices" class="auto-lead" aria-label="Interlignages compatibles"></select></label><button type="button" class="text-action" id="showAllLeading" hidden>Toutes les valeurs</button></div>
+  </div>
+  <p class="hint" id="typeHint"></p>
+ </section>
+ <section class="control"><div class="section-title"><span class="index">04</span> Grille</div>
+  <div class="field-head">Forme des modules</div>
+  <div class="shape-control" role="group" aria-label="Forme des modules"><button type="button" data-shape="free" class="active" aria-pressed="true">Libres</button><button type="button" data-shape="square" aria-pressed="false">Carrés</button></div>
+  <p class="shape-note" id="shapeNote" hidden></p>
+  <div class="row2"><label class="field"><span>Rangées</span><input id="rows" data-n="int" inputmode="numeric"></label><label class="field"><span>Gouttière des rangées</span><div class="number"><input id="rowGapSteps" data-n="int" inputmode="numeric"><span class="suffix">pas</span></div></label></div>
+  <div class="row2"><label class="field"><span>Colonnes</span><input id="columns" data-n="int" inputmode="numeric"></label><label class="field" id="colGapStepBlock"><span>Gouttière des colonnes</span><div class="number"><input id="colGapSteps" data-n="int" inputmode="numeric"><span class="suffix">pas</span></div></label><label class="field" id="colGapFreeBlock" hidden><span>Gouttière des colonnes</span><div class="number"><input id="colGap" data-n="mm" inputmode="decimal"><span class="suffix" data-unit>mm</span></div></label></div>
+  <label class="check"><input type="checkbox" id="columnSnap" checked>Gouttière des colonnes liée à la grille</label>
+ </section>
+</aside>
+<section class="preview-panel"><div class="preview-head"><div><h2>Aperçu</h2><p id="pageInfo"></p><span class="font-kind" id="fontKind">Serif · Georgia</span></div><span class="status-pill" id="stageStatus">Grille OK</span></div>
+ <div class="page-viewport" id="pageViewport" title="Aperçu de la composition"><svg id="paper" viewBox="0 0 210 297" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Aperçu des marges, images, rangées, colonnes et lignes de base"></svg><div id="zoomLens" class="zoom-lens" aria-hidden="true"><svg id="zoomPaper" viewBox="0 0 210 297" preserveAspectRatio="xMidYMid slice"></svg><span class="zoom-value" id="zoomValue">×4 · repères</span></div></div>
+ <div class="legend"><div class="legend-items"><span><i class="line" style="background:var(--pink)"></i>Marges</span><span><i class="line" style="background:var(--blue)"></i>Lignes de base</span><span><i class="line" style="background:var(--orange)"></i>Repères InDesign</span><span id="idealLegend" hidden><i class="line" style="background:#98929c"></i>Repères alignés</span><span><i class="line" style="background:var(--violet)"></i>Colonnes</span></div><div class="view-buttons"><button id="toggleGrid" type="button" aria-pressed="true">Grille</button><button id="toggleRows" type="button" aria-pressed="true">Repères</button><button id="toggleText" type="button" aria-pressed="true">Texte</button><button id="toggleImages" type="button" aria-pressed="true">Images</button><button id="toggleZoom" type="button" aria-pressed="false" title="Contrôler les espacements et les repères">Loupe</button><button id="shuffleComposition" type="button" title="Générer une nouvelle composition" aria-label="Nouvelle composition aléatoire">↻ Aléatoire</button></div></div>
+ <div class="signature"><span>© 2026 Virgile Arlaud</span><span class="signature-sep">/</span><a href="https://github.com/virgile-fr" target="_blank" rel="noopener noreferrer" aria-label="virgile-fr sur GitHub">virgile-fr sur GitHub ↗</a></div>
+</section>
+<aside class="sidebar results"><h2 class="pane-title">À saisir dans InDesign</h2><div class="calculation-modes" role="group" aria-label="Méthode de calcul"><button type="button" data-calculation="simple" class="active" aria-pressed="true" title="Cherche les mesures les plus simples dans la limite de l’écart autorisé">Valeurs simples</button><button type="button" data-calculation="exact" aria-pressed="false" title="Remplit la zone entre les marges au plus près des mesures souhaitées">Calcul exact</button></div><div class="tolerance-row" id="toleranceRow"><label for="gapThreshold" title="Écart toléré entre la fin de la grille et la marge de pied">Marge d’erreur</label><div class="number"><input id="gapThreshold" type="number" min="0" max="3" step="0.05" value="0.05" inputmode="decimal" aria-describedby="toleranceHelp"><span class="suffix">mm</span></div></div><p class="tolerance-help" id="toleranceHelp">Espace toléré sous la grille. Les marges du document ne changent pas. À 0 mm, la grille remplit toute la hauteur.</p><p class="calculation-note" id="calculationNote" hidden></p><button class="copy" type="button" id="copy" title="Copier les mesures exactes">Copier les valeurs</button><div id="status" class="info" role="status"></div>
+ <div class="result-group"><h3>Format de document</h3><div class="result-row"><span>Format de page</span><output id="outFormat"></output></div><div class="result-row" id="facingRow" hidden><span>Pages en vis-à-vis</span><output>Activées</output></div><div class="result-row"><span>De tête</span><output id="outTop"></output></div><div class="result-row"><span>De pied</span><output id="outBottom"></output></div><div class="result-row"><span>Petit fond</span><output id="outInside"></output></div><div class="result-row"><span>Grand fond</span><output id="outOutside"></output></div></div>
+ <div class="result-group"><h3>Caractère</h3><div class="result-row"><span>Corps</span><output id="outFont"></output></div><div class="result-row featured"><span>Interlignage</span><output id="outLeading"></output></div></div>
+ <div class="result-group"><h3>Créer des repères</h3><div class="result-row"><span>Rangées · Nombre</span><output id="outRows"></output></div><div class="result-row"><span>Rangées · Gouttière</span><output id="outRowGap"></output></div><div class="result-row"><span>Colonnes · Nombre</span><output id="outCols"></output></div><div class="result-row"><span>Colonnes · Gouttière</span><output id="outColGap"></output></div><div class="result-row"><span>Ajuster les repères</span><output id="outGuideAlign">Aux marges</output></div><div class="result-row" id="reserveRow" hidden><span>Écart des repères</span><output id="outReserve"></output></div></div>
+ <div class="result-group"><h3>Préférences → Grilles</h3><div class="result-row"><span>Début</span><output>0 pt</output></div><div class="result-row"><span>Relative à</span><output>Marge supérieure</output></div><div class="result-row featured"><span>Pas</span><output id="outStep"></output></div></div>
+ <details class="more"><summary>Détail du calcul</summary><div class="detail-body"><p id="mathExplain"></p><p id="guideExplain"></p><p>Dans Paragraphe, active « Aligner sur la grille de ligne de base ».</p><p>InDesign peut afficher moins de décimales que le calcul.</p></div></details>
+</aside></main>
+<script>
+(()=>{'use strict';
+ const $=id=>document.getElementById(id);const NS='http://www.w3.org/2000/svg';const PT_MM=25.4/72;
+ const presets={A4:[210,297],A5:[148,210],art240:[240,320],B4:[250,353],A3:[297,420],letter:[215.9,279.4]};
+ const examplePresets={
+  'a4-report':{format:'A4',w:210,h:297,body:10,lead:12,rows:6,rowGap:1,cols:2,colGap:1,mode:'auto',target:20,horizontal:20,note:'Rapport ou dossier illustré. Deux colonnes, lecture confortable.'},
+  'a4-magazine':{format:'A4',w:210,h:297,body:9.5,lead:12,rows:7,rowGap:1,cols:3,colGap:1,mode:'auto',target:17,horizontal:17,note:'Magazine à textes courts, images et légendes. Trois colonnes modulables.'},
+  'artbook-240':{format:'art240',w:240,h:320,body:10.5,lead:14,rows:6,rowGap:1,cols:4,colGap:1,mode:'auto',target:24,horizontal:24,note:'Beau livre : 4 colonnes modulables (images sur 2 ou 4 colonnes, texte et légendes).'},
+  'b4-magazine':{format:'B4',w:250,h:353,body:10,lead:13,rows:8,rowGap:1,cols:6,colGap:1,mode:'auto',target:22,horizontal:22,note:'Magazine grand format : 6 colonnes structurantes. Texte sur 2 ou 3 colonnes.'},
+  'a3-poster':{format:'A3' ,w:297,h:420,body:14,lead:18,rows:6,rowGap:1,cols:4,colGap:1,mode:'auto',target:25,horizontal:25,note:'Affiche ou portfolio. Quatre colonnes pour composer textes et images.'},
+  'a5-book':{format:'A5',w:148,h:210,body:10.5,lead:13,rows:1,rowGap:0,cols:1,colGap:0,mode:'manual',top:18,bottom:25,inside:17,outside:23,note:'Roman. Une colonne, marges asymétriques. Dans InDesign, activer « Pages en vis-à-vis ».'},
+  'trade-book':{format:'custom',w:152.4,h:228.6,body:10.5,lead:13.5,rows:1,rowGap:0,cols:1,colGap:0,mode:'manual',top:21,bottom:29,inside:20,outside:24,note:'Essai ou livre courant (6 × 9 pouces). Activer « Pages en vis-à-vis » et vérifier le petit fond selon la reliure.'}
+ };
+ const defaults=()=>({pageW:210,pageH:297,fontPt:10,leadingPt:12,rows:5,rowGapSteps:1,columns:2,colGapSteps:1,colGap:6,target:20,horizontal:20,top:12.7,bottom:12.7,inside:12.7,outside:12.7});
+ let compositionVariant=0,compositionRandom=false,lastComposition=null;
+ const editorialFonts=[
+  {label:'Serif · Georgia',copy:'Georgia,"Times New Roman",serif',heading:'Georgia,"Times New Roman",serif',accent:'Arial,Helvetica,sans-serif',weight:700},
+  {label:'Sans-serif · Inter',copy:'"Inter",Arial,Helvetica,sans-serif',heading:'"Inter",Arial,Helvetica,sans-serif',accent:'"Inter",Arial,Helvetica,sans-serif',weight:700},
+  {label:'Monospace',copy:'"IBM Plex Mono","SFMono-Regular",Consolas,monospace',heading:'"IBM Plex Mono","SFMono-Regular",Consolas,monospace',accent:'"IBM Plex Mono","SFMono-Regular",Consolas,monospace',weight:600}
+ ];
+ function editorialFont(){return editorialFonts[compositionVariant%editorialFonts.length]}
+ let zoomEnabled=false;
+
+ let calculationMode='simple',maxGapMM=0.05;let shape='free';let s=defaults(),format='A4',orientation='portrait',unit='mm',marginMode='indesign',density='balanced',distribution='balanced',columnSnap=true,autoK=null,showAllLeading=false,view={grid:true,rows:true,text:true,images:true},solution=null,options=[],selectedExample='',isReset=true;
+ function syncExampleButtons(){document.querySelectorAll('.preset-btn').forEach(b=>{const active=b.id==='reset'?isReset:b.dataset.example===selectedExample;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))})}
+ function markCustom(){selectedExample='';isReset=false;syncExampleButtons()}
+ function applyExample(key){const v=examplePresets[key];if(!v)return;
+  s={...defaults(),pageW:v.w,pageH:v.h,fontPt:v.body,leadingPt:v.lead,rows:v.rows,rowGapSteps:v.rowGap,columns:v.cols,colGapSteps:v.colGap,target:v.target??20,horizontal:v.horizontal??20,top:v.top??20,bottom:v.bottom??20,inside:v.inside??20,outside:v.outside??20};
+  format=v.format;orientation='portrait';marginMode=v.mode;density='custom';distribution='balanced';columnSnap=true;shape='free';autoK=null;showAllLeading=false;selectedExample=key;isReset=false;
+  refreshFields();update();
+ }
+ const nIds=['pageW','pageH','fontPt','leadingPt','rows','rowGapSteps','columns','colGapSteps','colGap','target','horizontal','top','bottom','inside','outside'];
+ const mmIds=new Set(['pageW','pageH','colGap','target','horizontal','top','bottom','inside','outside']);
+ const intIds=new Set(['rows','rowGapSteps','columns','colGapSteps']);
+ const bounds={pageW:[10,1500],pageH:[10,1500],fontPt:[2,120],leadingPt:[2,150],rows:[1,100],rowGapSteps:[0,100],columns:[1,25],colGapSteps:[0,100],colGap:[0,250],target:[0,750],horizontal:[0,750],top:[0,750],bottom:[0,750],inside:[0,750],outside:[0,750]};
+ function toUnit(v){return unit==='pt'?v/PT_MM:v}
+ function fromUnit(v){return unit==='pt'?v*PT_MM:v}
+ function clean(v,dp=11){if(!Number.isFinite(v))return '—';if(Math.abs(v)<1e-12)return '0';return Number(v.toFixed(dp)).toLocaleString('fr-FR',{useGrouping:false,maximumFractionDigits:dp})}
+ function inputVal(v){return Number(v.toPrecision(14)).toString()}
+ function fieldVal(id){return inputVal(mmIds.has(id)?toUnit(s[id]):s[id])}
+ function fmtPt(v){return clean(v,11)+' pt'}
+ function fmtDim(v){return clean(toUnit(v),10)+' '+unit}
+ function resultPt(v){return fmtPt(v)}
+ function resultDim(v){return fmtDim(v)}
+ // Valeurs simples : une vraie mesure compatible, jamais un arrondi d'affichage.
+ // La marge ou l'interlignage ne bougent que si leur mode le permet.
+ const SIMPLE_STEPS=[1,0.5,0.25,0.1,0.05,0.01,0.005,0.001];
+ function simpleTier(v){
+  for(let i=0;i<SIMPLE_STEPS.length;i++){
+   const step=SIMPLE_STEPS[i];
+   if(Math.abs(v-Math.round(v/step)*step)<1e-8)return i;
+  }
+  return 99;
+ }
+ function simpleTolerance(usable,lead){
+  // Espace résiduel maximal en mm. Les marges fixes et la grille restent inchangées.
+  // La recherche de proximité avec les valeurs visées garde ses limites indépendantes.
+  return Math.max(0,Math.min(maxGapMM,usable));
+ }
+ function belowGrid(v,step){
+  return Math.floor(v/step+1e-10)*step;
+ }
+ function simpleLeads(ideal){
+  const vals=[ideal];
+  for(const step of SIMPLE_STEPS){
+   const candidate=belowGrid(ideal,step);
+   if(candidate>=2-1e-9&&candidate<=150+1e-9&&vals.every(v=>Math.abs(v-candidate)>1e-8))vals.push(candidate);
+  }
+  return vals;
+ }
+ function closestFirst(a,b){return Math.abs(a.lead-s.leadingPt)-Math.abs(b.lead-s.leadingPt)||a.reserve-b.reserve||b.k-a.k}
+ function preferSimple(a,b){
+  return simpleTier(toUnit(a.simpleMeasure))-simpleTier(toUnit(b.simpleMeasure))
+    ||Math.abs(a.lead-s.leadingPt)-Math.abs(b.lead-s.leadingPt)
+    ||a.reserve-b.reserve
+    ||a.cost-b.cost;
+ }
+ function refreshFields(){for(const id of nIds){$(id).value=fieldVal(id);$(id).classList.remove('invalid')}
+  $('format').value=format;$('distribution').value=distribution;$('columnSnap').checked=columnSnap;syncExampleButtons();
+  document.querySelectorAll('[data-unit]').forEach(el=>el.textContent=unit);
+  for(const x of ['portrait','landscape']){$(x).classList.toggle('active',orientation===x);$(x).setAttribute('aria-pressed',String(orientation===x))}
+  for(const x of ['mm','pt']){$(x).classList.toggle('active',unit===x);$(x).setAttribute('aria-pressed',String(unit===x))}
+  refreshModes();
+ }
+ function refreshModes(){document.querySelectorAll('[data-mode]').forEach(el=>{const active=el.dataset.mode===marginMode;el.classList.toggle('active',active);el.setAttribute('aria-pressed',String(active))});
+  document.querySelectorAll('[data-density]').forEach(el=>{const active=el.dataset.density===density;el.classList.toggle('active',active);el.setAttribute('aria-pressed',String(active))});
+  $('marginAutoBadge').hidden=marginMode!=='auto';$('autoMargins').hidden=marginMode!=='auto';$('zeroMargins').hidden=marginMode!=='zero';$('manualMargins').hidden=marginMode!=='manual';$('indesignMargins').hidden=marginMode!=='indesign';
+  $('manualLeading').hidden=marginMode!=='auto';$('automaticLeading').hidden=marginMode==='auto';
+  $('horizontalBlock').hidden=distribution==='all-equal';
+  $('colGapStepBlock').hidden=!columnSnap;$('colGapFreeBlock').hidden=columnSnap;
+  document.querySelectorAll('[data-shape]').forEach(el=>{const active=el.dataset.shape===shape;el.classList.toggle('active',active);el.setAttribute('aria-pressed',String(active))});
+  $('shapeNote').hidden=shape!=='square';
+ }
+ function presetDensity(d){density=d;const factor=Math.min(s.pageW,s.pageH)/210;const value={compact:12,balanced:20,airy:30}[d]*factor;s.target=value;s.horizontal=value}
+ function validCore(){const vals=Object.values(s);if(vals.some(x=>!Number.isFinite(x)))return 'Mesures invalides.';
+  if(s.pageW<=0||s.pageH<=0||s.fontPt<=0||s.leadingPt<=0||s.rows<1||s.columns<1||s.rowGapSteps<0||s.colGapSteps<0||s.colGap<0)return 'Vérifie les valeurs saisies.';
+  if(s.pageW>1500||s.pageH>1500||s.rows>100||s.columns>25||s.rowGapSteps>100||s.colGapSteps>100||s.leadingPt>150)return 'Dimensions ou nombres trop élevés.';
+  for(const id of intIds)if(!Number.isInteger(s[id]))return 'Les rangées, colonnes et pas doivent être entiers.';
+  return null;
+ }
+ function columnGeometry(lead,L,R){const gap=columnSnap?s.colGapSteps*lead*PT_MM:s.colGap,usable=s.pageW-L-R-(s.columns-1)*gap;
+  return {gap,usable};
+ }
+ function candidateBase(k,lead,T,B,L,R){const d=lead*PT_MM,rg=s.rowGapSteps*d,n=s.rows*k+(s.rows-1)*s.rowGapSteps;
+  const fullHeight=n*d;const reserve=s.pageH-T-B-fullHeight;const cg=columnGeometry(lead,L,R);if(cg.usable<=1e-8)return null;
+  return {k,lead,d,n,W:s.pageW,H:s.pageH,T,B,L,R,rowH:k*d,rowGap:rg,gridH:fullHeight,reserve:Math.max(0,reserve),cols:s.columns,rows:s.rows,colGap:cg.gap,colW:cg.usable/s.columns};
+ }
+ function solveAutomatic(){
+  const d=s.leadingPt*PT_MM,R=s.rows,G=s.rowGapSteps;
+  const maxK=Math.min(2500,Math.floor((s.pageH/d-(R-1)*G)/R+1e-9));
+  if(maxK<1)return {ok:false,message:'La page ne contient pas ces rangées avec cet interlignage.'};
+  const exact=[];
+  for(let k=1;k<=maxK;k++){
+   const n=R*k+(R-1)*G,gridH=n*d,rest=s.pageH-gridH;
+   if(rest< -1e-7)continue;
+   let T=rest/2,B=rest/2,L=s.horizontal,Q=s.horizontal;
+   if(shape==='square'){
+    const gap=columnSnap?s.colGapSteps*d:s.colGap;
+    const leftoverW=s.pageW-s.columns*k*d-(s.columns-1)*gap;
+    if(leftoverW< -1e-7)continue;
+    L=Math.max(0,leftoverW/2);Q=L;
+   }
+   if(distribution==='top-fixed'){T=s.target;B=rest-T}
+   else if(distribution==='bottom-fixed'){B=s.target;T=rest-B}
+   else if(distribution==='all-equal'){
+    if(shape==='square'&&Math.abs(L-T)>1e-7)continue;
+    L=T;Q=B;
+   }
+   if(T<-1e-8||B<-1e-8)continue;
+   const entry=candidateBase(k,s.leadingPt,Math.max(0,T),Math.max(0,B),L,Q);
+   if(!entry||entry.reserve>1e-7)continue;
+   if(shape==='square'&&Math.abs(entry.colW-entry.rowH)>1e-7)continue;
+   const desired=distribution==='top-fixed'?B:distribution==='bottom-fixed'?T:T;
+   const sideCost=shape==='square'?Math.abs(L-s.horizontal):0;
+   const cost=Math.abs(desired-s.target)+sideCost;
+   exact.push({...entry,cost,simpleMeasure:desired});
+  }
+  if(!exact.length){
+   if(shape==='square'&&distribution==='all-equal')return {ok:false,message:'Quatre marges égales et modules carrés ne sont pas compatibles avec ces dimensions.',fix:'balanced'};
+   return {ok:false,message:shape==='square'?'Les modules carrés ne tiennent pas. Réduis les rangées, colonnes ou gouttières.':'Pas assez de place. Réduis les rangées, les gouttières ou l’interlignage.'};
+  }
+  exact.sort((a,b)=>a.cost-b.cost||b.k-a.k);
+  if(calculationMode==='exact'||shape==='square')return {ok:true,selected:exact[0],options:exact};
+
+  // En marges auto, on peut laisser une réserve minime pour obtenir des marges
+  // plus faciles à saisir. Les répartitions haut/bas et marges égales restent respectées.
+  const tolerance=simpleTolerance(s.pageH,s.leadingPt);
+  const candidates=[];
+  for(const m of exact){
+   candidates.push(m);
+   const base=distribution==='top-fixed'?m.B:distribution==='bottom-fixed'?m.T:m.T;
+   for(const step of SIMPLE_STEPS){
+    const snapped=belowGrid(base,step*(unit==='pt'?PT_MM:1));
+    if(snapped<0||Math.abs(snapped-base)<1e-8)continue;
+    const T=distribution==='bottom-fixed'?snapped:m.T;
+    const B=distribution==='top-fixed'?snapped:distribution==='bottom-fixed'?m.B:snapped;
+    const top=distribution==='balanced'||distribution==='all-equal'?snapped:T;
+    const L=distribution==='all-equal'?snapped:m.L;
+    const Q=distribution==='all-equal'?snapped:m.R;
+    const entry=candidateBase(m.k,m.lead,top,B,L,Q);
+    if(!entry||entry.reserve<0||entry.reserve>tolerance+1e-8)continue;
+    const desired=distribution==='top-fixed'?entry.B:distribution==='bottom-fixed'?entry.T:entry.T;
+    candidates.push({...entry,cost:Math.abs(desired-s.target),simpleMeasure:desired});
+   }
+  }
+  // N'autoriser qu'un écart très modéré par rapport au meilleur résultat exact.
+  // Une valeur ronde ne doit jamais imposer des marges très différentes.
+  const drift=Math.max(0.6,Math.min(1.5,s.target*0.04));
+  const eligible=candidates.filter(m=>m.cost<=exact[0].cost+drift+1e-8);
+  eligible.sort((a,b)=>simpleTier(toUnit(a.simpleMeasure))-simpleTier(toUnit(b.simpleMeasure))
+    ||a.cost-b.cost||a.reserve-b.reserve||b.k-a.k);
+  const chosen=eligible[0]||exact[0];
+  // Une valeur par nombre de pas, pour les seuils voisins.
+  const perK=new Map();
+  for(const m of candidates){
+   const old=perK.get(m.k);
+   if(!old||simpleTier(toUnit(m.simpleMeasure))<simpleTier(toUnit(old.simpleMeasure))
+      ||(simpleTier(toUnit(m.simpleMeasure))===simpleTier(toUnit(old.simpleMeasure))&&m.cost<old.cost))perK.set(m.k,m);
+  }
+  perK.set(chosen.k,chosen);
+  return {ok:true,selected:chosen,options:Array.from(perK.values())};
+ }
+ function solveFixed(){
+  const {pageH:H,rows:R,rowGapSteps:G}=s;
+  const T=marginMode==='zero'?0:marginMode==='indesign'?12.7:s.top;
+  const B=marginMode==='zero'?0:marginMode==='indesign'?12.7:s.bottom;
+  const L=marginMode==='zero'?0:marginMode==='indesign'?12.7:s.inside;
+  const Q=marginMode==='zero'?0:marginMode==='indesign'?12.7:s.outside;
+  const usable=H-T-B;
+  if(Math.min(T,B,L,Q)<0||usable<=0)return {ok:false,message:'Les marges ne laissent pas de hauteur disponible.'};
+  if(s.pageW-L-Q<=0)return {ok:false,message:'Les marges ne laissent pas de largeur disponible.'};
+
+  const exact=[],candidates=[];
+  for(let k=1;k<=2500;k++){
+   const n=R*k+(R-1)*G,ideal=usable/(n*PT_MM);
+   if(ideal<2-1e-10)break;
+   if(ideal>150+1e-9)continue;
+   // Un module carré avec des marges fixes détermine le pas par sa largeur.
+   // On ne fait pas semblant d'avoir une solution si la hauteur ne correspond pas.
+   const squareLead=(s.pageW-L-Q-(columnSnap?0:(s.columns-1)*s.colGap)) /
+       (k*s.columns+(columnSnap?(s.columns-1)*s.colGapSteps:0))/PT_MM;
+   const possible=shape==='square'?[squareLead]:(calculationMode==='simple'?simpleLeads(ideal):[ideal]);
+   for(const lead of possible){
+    if(!Number.isFinite(lead)||lead<2-1e-8||lead>150+1e-8||lead>ideal+1e-8)continue;
+    const entry=candidateBase(k,lead,T,B,L,Q);
+    if(!entry||entry.gridH>usable+1e-8)continue;
+    if(shape==='square'&&Math.abs(entry.colW-entry.rowH)>1e-7)continue;
+    const tolerance=simpleTolerance(usable,lead);
+    if(calculationMode==='exact'&&entry.reserve>1e-7)continue;
+    if(calculationMode==='simple'&&entry.reserve>tolerance+1e-8)continue;
+    const result={...entry,cost:Math.abs(lead-s.leadingPt),simpleMeasure:lead};
+    candidates.push(result);
+    if(entry.reserve<=1e-7)exact.push(result);
+   }
+  }
+  if(!candidates.length)return {ok:false,message:shape==='square'?'Ces marges ne permettent pas des modules carrés. Modifie les marges horizontales.':columnSnap?'Aucun interlignage compatible avec la largeur des colonnes et les marges.':'Pas d’interlignage possible. Réduis les marges ou les rangées.',fix:shape==='square'?'automargins':null};
+  const baseline=(exact.length?exact:candidates).slice().sort(closestFirst)[0];
+  const drift=Math.max(0.5,Math.min(1,s.leadingPt*0.05));
+  const near=candidates.filter(m=>m.cost<=baseline.cost+drift+1e-9);
+  near.sort((a,b)=>simpleTier(a.lead)-simpleTier(b.lead)
+    ||a.cost-b.cost||a.reserve-b.reserve||b.k-a.k);
+  const winner=calculationMode==='simple'?(near[0]||baseline):baseline;
+  const perK=new Map();
+  for(const m of candidates){
+   const old=perK.get(m.k);
+   if(!old||(calculationMode==='simple'?
+      (simpleTier(m.lead)<simpleTier(old.lead)||(simpleTier(m.lead)===simpleTier(old.lead)&&closestFirst(m,old)<0)):
+      closestFirst(m,old)<0))perK.set(m.k,m);
+  }
+  perK.set(winner.k,winner);
+  const found=Array.from(perK.values()).sort((a,b)=>a.cost-b.cost||a.reserve-b.reserve||b.k-a.k);
+  const selected=autoK===null?winner:found.find(v=>v.k===autoK)||winner;
+  return {ok:true,selected,options:found};
+ }
+ function solve(){const invalid=validCore();if(invalid)return {ok:false,message:invalid};
+  return marginMode==='auto'?solveAutomatic():solveFixed();
+ }
+ // Find the two values of the desired margin at which the chosen row height changes.
+ // In fixed-side modes the opposite margin changes continuously; the thresholds refer to row steps.
+ function marginTransitions(selectedK){
+  const R=s.rows,G=s.rowGapSteps,d=s.leadingPt*PT_MM;
+  const maxK=Math.min(2500,Math.floor((s.pageH/d-(R-1)*G)/R+1e-9));
+  const candidates=[];
+  for(let k=1;k<=maxK;k++){
+   const rest=s.pageH-(R*k+(R-1)*G)*d;
+   if(rest< -1e-7)continue;
+   const half=rest/2;
+   const equal=distribution==='all-equal';
+   const L=equal?half:s.horizontal,Q=L;
+   if(columnGeometry(s.leadingPt,L,Q).usable<=1e-8)continue;
+   candidates.push({k,rest,half});
+  }
+  const fixed=distribution==='top-fixed'||distribution==='bottom-fixed';
+  function choice(target){
+   let best=null;
+   for(const c of candidates){
+    if(fixed&&target>c.rest+1e-10)continue;
+    const cost=Math.abs(c.half-target);
+    if(!best||cost<best.cost-1e-10||(Math.abs(cost-best.cost)<=1e-10&&c.k>best.k))best={k:c.k,cost};
+   }
+   return best?.k??null;
+  }
+  const now=s.target,max=Math.min(750,s.pageH);
+  function boundary(lower){
+   const end=lower?0:max;
+   if(choice(end)===selectedK||Math.abs(now-end)<1e-12)return null;
+   let lo=lower?end:now,hi=lower?now:end;
+   for(let i=0;i<55;i++){
+    const mid=(lo+hi)/2;
+    if(choice(mid)===selectedK){if(lower)hi=mid;else lo=mid}
+    else {if(lower)lo=mid;else hi=mid}
+   }
+   return (lo+hi)/2;
+  }
+  return {lower:boundary(true),upper:boundary(false)};
+ }
+ function refreshMarginBand(found){
+  const band=$('marginBand');band.hidden=marginMode!=='auto'||!found.ok;
+  if(band.hidden)return;
+  const m=found.selected;
+  if(shape==='square'){
+   $('retainedLabel').textContent='Marges obtenues · haut / côtés';
+   $('retainedValue').textContent=`${clean(toUnit(m.T),3)} / ${clean(toUnit(m.L),3)} ${unit}`;
+   const sorted=found.options.slice().sort((a,b)=>a.k-b.k),ix=sorted.findIndex(v=>v.k===m.k);
+   const fmt=v=>`${clean(toUnit(v.T),2)} / ${clean(toUnit(v.L),2)} ${unit}`;
+   $('lowerThreshold').textContent=ix>0?`◂ Autre palier ${fmt(sorted[ix-1])}`:'◂ Aucun palier inférieur';
+   $('upperThreshold').textContent=ix<sorted.length-1?`Autre palier ${fmt(sorted[ix+1])} ▸`:'Aucun palier supérieur ▸';
+   $('lowerThreshold').title='Haut / côtés';$('upperThreshold').title='Haut / côtés';return;
+  }
+  const labels={balanced:'De tête / De pied', 'all-equal':'Quatre marges', 'top-fixed':'De pied calculé', 'bottom-fixed':'De tête calculé'};
+  const actual=distribution==='top-fixed'?m.B:distribution==='bottom-fixed'?m.T:m.T;
+  $('retainedLabel').textContent=labels[distribution]||'Marge retenue';
+  $('retainedValue').textContent=`≈ ${clean(toUnit(actual),2)} ${unit}`;
+  $('retainedValue').title=fmtDim(actual);
+  if(calculationMode==='simple'){
+   // Simple mode changes the optimal breakpoints. Show adjacent valid grid values, not thresholds from the exact mode.
+   const sorted=found.options.slice().sort((a,b)=>a.T-b.T),ix=sorted.findIndex(v=>v.k===m.k);
+   const fmt=v=>`${clean(toUnit(v.T),3)} ${unit}`;
+   $('lowerThreshold').textContent=ix>0?`◂ Palier ${fmt(sorted[ix-1])}`:'◂ Minimum';
+   $('upperThreshold').textContent=ix<sorted.length-1?`Palier ${fmt(sorted[ix+1])} ▸`:'Maximum ▸';
+   $('lowerThreshold').title='Valeur compatible précédente';
+   $('upperThreshold').title='Valeur compatible suivante';return;
+  }
+  const limits=marginTransitions(m.k);
+  const fmt=v=>`≈ ${clean(toUnit(v),2)} ${unit}`;
+  $('lowerThreshold').textContent=limits.lower===null?'↓ Minimum atteint':`↓ Seuil bas ${fmt(limits.lower)}`;
+  $('upperThreshold').textContent=limits.upper===null?'↑ Maximum atteint':`↑ Seuil haut ${fmt(limits.upper)}`;
+  $('lowerThreshold').title=limits.lower===null?'':`Seuil exact : ${fmtDim(limits.lower)}`;
+  $('upperThreshold').title=limits.upper===null?'':`Seuil exact : ${fmtDim(limits.upper)}`;
+ }
+ function populateLeading(found){const el=$('leadingChoices');el.replaceChildren();if(marginMode==='auto')return;
+  $('showAllLeading').hidden=!found.ok||found.options.length<=11;
+  $('showAllLeading').textContent=showAllLeading?'Valeurs proches':'Toutes les valeurs';
+  if(!found.ok){const op=new Option('Aucune valeur possible','');el.add(op);return;}
+  // Most useful values near the initial interline, plus the selected option.
+  const close=showAllLeading?found.options.slice():found.options.slice().sort((a,b)=>a.cost-b.cost).slice(0,11);
+  if(!close.some(x=>x.k===found.selected.k))close.push(found.selected);
+  close.sort((a,b)=>b.lead-a.lead);
+  for(const m of close){const suffix=m.lead<s.fontPt?' · étroit':'';const opt=new Option(`${clean(m.lead,9)} pt${suffix}`,String(m.k));opt.title=`${m.n} pas au total · ${m.k} pas par rangée`;el.add(opt)}
+  el.value=String(found.selected.k);
+ }
+ function svgEl(p,tag,a={},text){const e=document.createElementNS(NS,tag);Object.entries(a).forEach(([k,v])=>e.setAttribute(k,String(v)));if(text!==undefined)e.textContent=text;p.append(e);return e}
+ const sampleImages=["data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTAwMCIgdmlld0JveD0iMCAwIDgwMCAxMDAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9IndhbGwiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBzdG9wLWNvbG9yPSIjZDVjN2I1Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjOWM5MjhkIi8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImRhcmsiIHgxPSIwIiB5MT0iMCIgeDI9IjAuOSIgeTI9IjEiPjxzdG9wIHN0b3AtY29sb3I9IiM1ZjZiNjkiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyNTJlMzUiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0ic3VuIiB4MT0iMCIgeDI9IjEiIHkxPSIwIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2U1ZDNiNCIgc3RvcC1vcGFjaXR5PSIuOSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2U1ZDNiNCIgc3RvcC1vcGFjaXR5PSIwIi8+PC9saW5lYXJHcmFkaWVudD48ZmlsdGVyIGlkPSJncmFpbiI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNDQiIG51bU9jdGF2ZXM9IjIiIHNlZWQ9IjUiLz48L2ZpbHRlcj48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIxMDAwIiBmaWxsPSJ1cmwoI3dhbGwpIi8+PHBvbHlnb24gcG9pbnRzPSIwLDAgNTU1LDAgMzI1LDEwMDAgMCwxMDAwIiBmaWxsPSIjYzViOWFkIi8+PHBvbHlnb24gcG9pbnRzPSI0MjAsMCA4MDAsMCA4MDAsMTAwMCAxOTUsMTAwMCIgZmlsbD0idXJsKCNkYXJrKSIvPjxwb2x5Z29uIHBvaW50cz0iNTY1LDAgNzU1LDAgNTcwLDEwMDAgMzIwLDEwMDAiIGZpbGw9IiM1OTZkNmIiLz48cG9seWdvbiBwb2ludHM9IjAsMCA0NzUsMCAxMTAsMTAwMCAwLDEwMDAiIGZpbGw9InVybCgjc3VuKSIvPjxyZWN0IHg9IjUyNSIgeT0iMTMwIiB3aWR0aD0iMTUwIiBoZWlnaHQ9IjUyMCIgcng9IjIiIGZpbGw9IiMxYzMzMzgiLz48cmVjdCB4PSI1NDEiIHk9IjE0OCIgd2lkdGg9IjExNiIgaGVpZ2h0PSI0NzIiIGZpbGw9IiM3ZjlhOWIiLz48cG9seWdvbiBwb2ludHM9IjU0MSwxNDggNjU3LDE0OCA1NDEsNDg0IiBmaWxsPSIjZDljOWFmIiBvcGFjaXR5PSIuNzIiLz48cGF0aCBkPSJNMCA3MjBMNTgwIDUzMCA4MDAgNTQ1IDgwMCA2MjAgMCA4NTBaIiBmaWxsPSIjY2ZjNGI4Ii8+PHBhdGggZD0iTTAgODUzTDU4OCA2NjYgODAwIDY4NSA4MDAgNzM4IDAgOTgzWiIgZmlsbD0iI2I1YTk5ZSIvPjxwYXRoIGQ9Ik0wIDk4MEw2MDggNzkwIDgwMCA4MTAgODAwIDEwMDAgMCAxMDAwWiIgZmlsbD0iI2VjZTBjZiIvPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iMTAwMCIgZmlsdGVyPSJ1cmwoI2dyYWluKSIgb3BhY2l0eT0iLjA3Ii8+PC9zdmc+", "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTAwMCIgdmlld0JveD0iMCAwIDgwMCAxMDAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2Q5ZGZjZSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzg5OWE4OCIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJsZWFmIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iIzY1N2E1YyIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzIzM2YzNiIvPjwvbGluZWFyR3JhZGllbnQ+PGZpbHRlciBpZD0iYmx1ciI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMzUiLz48L2ZpbHRlcj48ZmlsdGVyIGlkPSJncmFpbiI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNTUiIG51bU9jdGF2ZXM9IjIiIHNlZWQ9IjciLz48L2ZpbHRlcj48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIxMDAwIiBmaWxsPSJ1cmwoI2JnKSIvPjxjaXJjbGUgY3g9IjYxNCIgY3k9IjE4MCIgcj0iMjUwIiBmaWxsPSIjZWNlNmNkIiBvcGFjaXR5PSIuODIiIGZpbHRlcj0idXJsKCNibHVyKSIvPjxwYXRoIGQ9Ik0zNTAgMTEyMFEyODAgNjgwIDUyNS05MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNDM1YzRkIiBzdHJva2Utd2lkdGg9IjIzIi8+PHBhdGggZD0iTTM3MCA2ODBRNzUgNjUwIDE4IDM4NVEyNzUgMzQxIDM3MCA2ODBaIiBmaWxsPSJ1cmwoI2xlYWYpIi8+PHBhdGggZD0iTTM2MCA1NDVRNTIwIDI1MiA3NjUgMjI0UTc0MCA0OTIgMzYwIDU0NVoiIGZpbGw9IiM3MzhiNjgiLz48cGF0aCBkPSJNMjgwIDg5MFE1MCA5OTAgLTk1IDY5NFExODAgNjU1IDI4MCA4OTBaIiBmaWxsPSIjMzU1YjQ4Ii8+PHBhdGggZD0iTTQ1MCAzMDJRMjgwIDEwMCAxODAtMzBRNDgwLTQ1IDQ1MCAzMDJaIiBmaWxsPSIjNDU2YzU5Ii8+PHBhdGggZD0iTTQ1OSAyODBRNjUwIDExMCA4MzUgNDBRODIwIDI5MiA0NTkgMjgwWiIgZmlsbD0iIzQ1Njk0YiIvPjxwYXRoIGQ9Ik0zNTcgNjc4UTE4MCA1MzcgMzYgNDA3TTM2MCA1NDVRNTYwIDM5OSA3NDEgMjM5TTI4MyA4OTFRMTUyIDgyMyAtNjIgNzA1TTQ1MiAzMDRRMzQwIDEyMiAxOTMgOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzFjY2FhIiBzdHJva2Utd2lkdGg9IjciIG9wYWNpdHk9Ii40Ii8+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIxMDAwIiBmaWx0ZXI9InVybCgjZ3JhaW4pIiBvcGFjaXR5PSIuMDciLz48L3N2Zz4=", "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTAwMCIgdmlld0JveD0iMCAwIDgwMCAxMDAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2U3ZDRjOCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2I4YTQ5YSIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJjbGF5IiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iLjMiPjxzdG9wIHN0b3AtY29sb3I9IiM3YTQ4M2QiLz48c3RvcCBvZmZzZXQ9Ii41IiBzdG9wLWNvbG9yPSIjYmE2ZjUzIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjOWI0ZDNjIi8+PC9saW5lYXJHcmFkaWVudD48ZmlsdGVyIGlkPSJncmFpbiI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNDkiIG51bU9jdGF2ZXM9IjIiIHNlZWQ9IjMiLz48L2ZpbHRlcj48ZmlsdGVyIGlkPSJzaGFkb3ciPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjIyIi8+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iMTAwMCIgZmlsbD0idXJsKCNiZykiLz48Y2lyY2xlIGN4PSI2OTAiIGN5PSIxODAiIHI9IjI3MCIgZmlsbD0iI2YyZTZkMiIgb3BhY2l0eT0iLjc0Ii8+PHBhdGggZD0iTTAgNjMwTDgwMCA0NTAgODAwIDEwMDBIMFoiIGZpbGw9IiNjN2FmYTAiLz48ZWxsaXBzZSBjeD0iMzk1IiBjeT0iODQyIiByeD0iMzAwIiByeT0iNzUiIGZpbGw9IiM2NTRkNDkiIG9wYWNpdHk9Ii4yNyIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiLz48cGF0aCBkPSJNMjkwIDIxMEw0OTAgMjEwIDQ4MCA0MDJRNTgyIDQ4MiA1ODIgNjU1UTU3OCA4MzkgMzg5IDg1NVExOTYgODQ2IDIwMCA2NjFRMjA2IDQ5MCAzMDMgMzk3WiIgZmlsbD0idXJsKCNjbGF5KSIvPjxlbGxpcHNlIGN4PSIzOTAiIGN5PSIyMTIiIHJ4PSIxMDMiIHJ5PSIyNSIgZmlsbD0iIzZkMzgzMiIvPjxlbGxpcHNlIGN4PSIzOTAiIGN5PSIyMTMiIHJ4PSI3NiIgcnk9IjEyIiBmaWxsPSIjMzQyZTJkIi8+PHBhdGggZD0iTTI1OCA0ODBRMjIwIDU2MCAyMzUgNzAxIiBmaWxsPSJub25lIiBzdHJva2U9IiNlM2ExODMiIHN0cm9rZS13aWR0aD0iMTQiIG9wYWNpdHk9Ii40NyIvPjxjaXJjbGUgY3g9IjY0MCIgY3k9IjczNSIgcj0iMTI1IiBmaWxsPSIjZDY5YjRlIi8+PGNpcmNsZSBjeD0iNjIyIiBjeT0iNzEzIiByPSIxMDQiIGZpbGw9IiNlOGJkNmUiLz48cGF0aCBkPSJNNjA1IDYxNVE2OTAgNTk1IDc1MSA2NzIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2Y3ZGVhMCIgc3Ryb2tlLXdpZHRoPSI4IiBvcGFjaXR5PSIuNDUiLz48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjEwMDAiIGZpbHRlcj0idXJsKCNncmFpbikiIG9wYWNpdHk9Ii4wNyIvPjwvc3ZnPg==","data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTAwMCIgdmlld0JveD0iMCAwIDgwMCAxMDAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9InNreSIgeDI9IjAiIHkyPSIxIj48c3RvcCBzdG9wLWNvbG9yPSIjZDZkZWUwIi8+PHN0b3Agb2Zmc2V0PSIuNzUiIHN0b3AtY29sb3I9IiNhY2JhYzEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNhMmFkYjAiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0id2F0ZXIiIHgyPSIwIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iIzgwOWJhNCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzQ3NmQ3ZCIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJidWlsZGluZyI+PHN0b3Agc3RvcC1jb2xvcj0iI2U0YzhhYyIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2JlOTY4MCIvPjwvbGluZWFyR3JhZGllbnQ+PGZpbHRlciBpZD0iZ3JhaW4iPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIuNjUiIG51bU9jdGF2ZXM9IjIiIHNlZWQ9IjgiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48L2RlZnM+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSIxMDAwIiBmaWxsPSJ1cmwoI3NreSkiLz48Y2lyY2xlIGN4PSI1OTciIGN5PSIyNzQiIHI9IjE1NSIgZmlsbD0iI2Y1ZDVhZCIgb3BhY2l0eT0iLjgiLz48cGF0aCBkPSJNMCA0MjBMMTIzIDM5OCAxNjMgNDAzIDE2MyAzMzQgMzA4IDMzNCAzMDggNDA0IDQxMCA0MTQgNDEwIDM1OCA1MjQgMzU4IDUyNCA0MzIgODAwIDQyOCA4MDAgNjUwIDAgNjUwWiIgZmlsbD0iIzliOTE4OCIvPjxwYXRoIGQ9Ik0wIDQzOEgyMDhWNjAwSDBaTTIyMCA0MzhIMzUwVjYwMEgyMjBaTTM2NSA0MzJINTAwVjU5OEgzNjVaIiBmaWxsPSJ1cmwoI2J1aWxkaW5nKSIvPjxnIGZpbGw9IiM1NDVjNjEiPjxwYXRoIGQ9Ik0yOCA0NzJINzNWNTI0SDI4Wk05NCA0NzJIMTM4VjUyNEg5NFpNMjM2IDQ2M0gyNjZWNTExSDIzNlpNMjc5IDQ2M0gzMTBWNTExSDI3OVpNMzk0IDQ2OEg0MjZWNTA4SDM5NFoiLz48L2c+PHBhdGggZD0iTTAgNTk4UTIyMCA1NzkgNDEwIDU5OVQ4MDAgNTgwVjEwMDBIMFoiIGZpbGw9InVybCgjd2F0ZXIpIi8+PGcgb3BhY2l0eT0iLjQyIiBmaWxsPSJub25lIiBzdHJva2U9IiNkOWQ0YzYiPjxwYXRoIGQ9Ik0wIDczNVExOTAgNzIxIDM5NyA3MzlUODAwIDczNk0wIDc5MFExOTAgNzc3IDM5NCA3OTdUODAwIDc4OU0wIDg2MVExOTAgODUxIDM4NSA4NjZUODAwIDg1OE0wIDkzNVExOTAgOTE4IDM5NyA5MzVUODAwIDkzMSIgc3Ryb2tlLXdpZHRoPSI5Ii8+PC9nPjxwYXRoIGQ9Ik0xMzUgNjI1TDQxNSA2MjUgMzg4IDcyOCAxODYgNzI4WiIgZmlsbD0iI2UxZDdjMiIvPjxwYXRoIGQ9Ik0yNjUgMjk2VjY0MU0yNjUgMzAxTDE1MCA2MjRIMjY1WiIgZmlsbD0iI2YxZWRlMCIvPjxwYXRoIGQ9Ik0yNzAgMzA5TDQxNCA2MjZIMjcwWiIgZmlsbD0iI2U5ZDljMiIvPjxwYXRoIGQ9Ik0yNzAgMzA5VjYzMiIgc3Ryb2tlPSIjNTU1MzRlIiBzdHJva2Utd2lkdGg9IjgiLz48cGF0aCBkPSJNNDE1IDYyMkw2MTAgNjIyIDU4NCA2OTggNDUyIDcwMVoiIGZpbGw9IiNhOWI2YjUiLz48cGF0aCBkPSJNNTE0IDM2N1Y2MzBNNTE3IDM3Nkw0MzYgNjE1SDUxN1oiIGZpbGw9IiNkN2QyY2EiLz48cGF0aCBkPSJNNTE3IDM3N0w2MDcgNjE1SDUxN1oiIGZpbGw9IiNjNmQxZDAiLz48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjEwMDAiIGZpbHRlcj0idXJsKCNncmFpbikiIG9wYWNpdHk9Ii4wNzUiLz48L3N2Zz4=","data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTAwMCIgdmlld0JveD0iMCAwIDgwMCAxMDAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9IndhbGwiIHgyPSIxIiB5Mj0iLjgiPjxzdG9wIHN0b3AtY29sb3I9IiNlOGRmZDAiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNjNmJjYjAiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0id29vZCIgeDI9IjEiIHkyPSIxIj48c3RvcCBzdG9wLWNvbG9yPSIjYTU2YTUwIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjQzYzM0Ii8+PC9saW5lYXJHcmFkaWVudD48ZmlsdGVyIGlkPSJncmFpbiI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9Ii41IiBudW1PY3RhdmVzPSIyIiBzZWVkPSI5Ii8+PC9maWx0ZXI+PGZpbHRlciBpZD0ic2hhZG93Ij48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIyNCIvPjwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjEwMDAiIGZpbGw9InVybCgjd2FsbCkiLz48cGF0aCBkPSJNMCA2NTBIODAwVjEwMDBIMFoiIGZpbGw9IiNjMmE5OWEiLz48cGF0aCBkPSJNMCA2NDlIODAwIiBzdHJva2U9IiM5ZDhhN2QiIHN0cm9rZS13aWR0aD0iNyIvPjxlbGxpcHNlIGN4PSI0MzkiIGN5PSI4MDUiIHJ4PSIyNzIiIHJ5PSI2MiIgZmlsbD0iIzU3NDIzZCIgb3BhY2l0eT0iLjI4IiBmaWx0ZXI9InVybCgjc2hhZG93KSIvPjxwYXRoIGQ9Ik0yODYgMjk5UTMwNiAyMjkgMzk4IDIyOVE0OTMgMjI5IDUxNCAyOTlMNDg4IDU0NlE0ODEgNjE0IDM5NiA2MjBRMzA3IDYyMCAzMDUgNTM1WiIgZmlsbD0iIzgwNjQ0ZiIvPjxwYXRoIGQ9Ik0zMDYgMjkzUTMxNSAyNTQgMzk2IDI1NFE0NzEgMjU0IDQ5NCAyOTZMNDczIDUxOFE0NjMgNTY2IDM5OCA1NzRRMzM0IDU2OSAzMzIgNTEwWiIgZmlsbD0idXJsKCN3b29kKSIvPjxwYXRoIGQ9Ik0zMTUgMzAxUTQwMCAzNDYgNDg5IDMwMSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDRhNDg5IiBzdHJva2Utd2lkdGg9IjEwIiBvcGFjaXR5PSIuNiIvPjxwYXRoIGQ9Ik0zMTIgNTY5TDMzMCA4ODhNNDg1IDU3MEw0NjkgODg5IiBzdHJva2U9IiM1ZDQ5NDEiIHN0cm9rZS13aWR0aD0iMzMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zMTEgNTk0UTQwMCA2MjQgNDgzIDU5NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNWY0YTQyIiBzdHJva2Utd2lkdGg9IjM2Ii8+PHBhdGggZD0iTTMyMSA2NDhRMzk3IDY4MiA0NzIgNjQ4IiBmaWxsPSJub25lIiBzdHJva2U9IiNiYTgwNjciIHN0cm9rZS13aWR0aD0iMTkiLz48cGF0aCBkPSJNMzA4IDYwM0wxODkgNzg4TTQ4OCA2MDVMNjA4IDc5MSIgc3Ryb2tlPSIjNjc0YjQxIiBzdHJva2Utd2lkdGg9IjIxIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMjE5IDc3M0wyMDUgOTEzTTU3OSA3NjlMNTkzIDkxMyIgc3Ryb2tlPSIjNjk0ZjQ1IiBzdHJva2Utd2lkdGg9IjIwIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMTEyIDYxMVExMTAgNTAyIDE3MSA0ODFRMjM2IDQ3MiAyNDMgNTczUTI0NiA2MDggMjIxIDY0NUwyMjEgODAySDE0OEwxNTAgNjQ3UTExMiA2MzUgMTEyIDYxMVoiIGZpbGw9IiNiNzhiNzAiIG9wYWNpdHk9Ii42NCIvPjxwYXRoIGQ9Ik0xMDQgNjI0UTEzMCA2NDQgMjE3IDYzOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTljMTlmIiBzdHJva2Utd2lkdGg9IjgiLz48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjEwMDAiIGZpbHRlcj0idXJsKCNncmFpbikiIG9wYWNpdHk9Ii4wNTUiLz48L3N2Zz4=","data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iMTAwMCIgdmlld0JveD0iMCAwIDgwMCAxMDAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIHN0b3AtY29sb3I9IiNlNmU4ZGIiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNhYmJiYWUiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0ibGVhZiIgeDI9IjEiIHkyPSIuNCI+PHN0b3Agc3RvcC1jb2xvcj0iIzcyOTE3YyIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzM0NWQ0YyIvPjwvbGluZWFyR3JhZGllbnQ+PGZpbHRlciBpZD0iZ3JhaW4iPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIuNTIiIG51bU9jdGF2ZXM9IjIiIHNlZWQ9IjciLz48L2ZpbHRlcj48ZmlsdGVyIGlkPSJzaGFkb3ciPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjMwIi8+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iMTAwMCIgZmlsbD0idXJsKCNiZykiLz48ZWxsaXBzZSBjeD0iNDkwIiBjeT0iNTA2IiByeD0iMjQ1IiByeT0iMzgwIiBmaWxsPSIjNGI2NzU2IiBvcGFjaXR5PSIuMTMiIGZpbHRlcj0idXJsKCNzaGFkb3cpIi8+PHBhdGggZD0iTTUwNSAxMDVRNDUxIDM5MCAzNjggOTUwIiBzdHJva2U9IiMzMDRlM2YiIHN0cm9rZS13aWR0aD0iMjQiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik00ODggMjU0UTIwNCA3NiA3NCAxOTRRMTYyIDQ4NyA0NTEgNDU2WiIgZmlsbD0idXJsKCNsZWFmKSIvPjxwYXRoIGQ9Ik00NTIgNDU3UTI3MyAyNjYgOTUgMjA5IiBzdHJva2U9IiNhMWIyOWQiIHN0cm9rZS13aWR0aD0iMTAiIGZpbGw9Im5vbmUiIG9wYWNpdHk9Ii41NSIvPjxwYXRoIGQ9Ik00MjAgNTY1UTY5MyAyNzAgNzkwIDQxNVE3MjcgNjkyIDM3MiA2NzhaIiBmaWxsPSIjNGQ3NDViIi8+PHBhdGggZD0iTTQxMyA2NDNRNjM0IDQ4NiA3NjggNDE1IiBzdHJva2U9IiNhYWM0YTkiIHN0cm9rZS13aWR0aD0iOSIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iLjYiLz48cGF0aCBkPSJNMzY1IDc2NlE5NCA1NjggMCA3MTFRODMgOTIyIDMzMSA5MjJaIiBmaWxsPSIjMmQ1YTQ3Ii8+PHBhdGggZD0iTTMyOCA5MDNRMTUwIDc2OCAxMCA3MjAiIHN0cm9rZT0iIzk2YjRhMCIgc3Ryb2tlLXdpZHRoPSI5IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNSIvPjxwYXRoIGQ9Ik01MTQgMTg5UTU0MyAyOSA3NzkgOVE4MTAgMjM4IDQ4NiAzNzlaIiBmaWxsPSIjOGRhODkxIi8+PHBhdGggZD0iTTUxMSAzNjhRNjUzIDE2MyA3NzcgMzEiIHN0cm9rZT0iI2Q2ZGNjYyIgc3Ryb2tlLXdpZHRoPSI4IiBmaWxsPSJub25lIiBvcGFjaXR5PSIuNTIiLz48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjEwMDAiIGZpbHRlcj0idXJsKCNncmFpbikiIG9wYWNpdHk9Ii4wNiIvPjwvc3ZnPg=="];
+
+
+ const editorialThemes=[
+  {arts:[0,4],eyebrow:'ARCHITECTURE  /  01',title:'Habiter la lumière',deck:'Dans les maisons du Sud, l’ombre dessine autant que les murs.',
+   section:'Une architecture du quotidien',caption:'Façades et matières, étude n° 01',
+   paragraphs:[
+    'Le matin, le soleil traverse la pièce à hauteur de table. La lumière glisse sur les murs et révèle la texture du plâtre, les angles du mobilier et les traces du temps.',
+    'Ici, l’espace ne se résume pas à un plan. Il prend forme dans le mouvement des habitants, dans les portes laissées ouvertes et les usages qui se déplacent avec les saisons.',
+    'Les matériaux ont été choisis pour leur présence discrète. Le bois, la pierre et le métal patiné composent un ensemble mesuré, sans effets inutiles.',
+    'Une fenêtre suffit parfois à organiser toute une pièce. Elle indique une direction, découpe un paysage et rythme les heures de la journée.',
+    'Le projet conserve les imperfections du lieu. Elles donnent à ces volumes une épaisseur que les surfaces neuves n’auraient pas.'
+   ]},
+  {arts:[2,4],eyebrow:'ATELIER  /  02',title:'Le goût de la matière',deck:'Un regard sur les objets, les gestes et les surfaces que l’on garde.',
+   section:'L’atelier et ses outils',caption:'Objets de travail, collection privée',
+   paragraphs:[
+    'Sur la grande table, les essais se succèdent. Un papier épais, un morceau de terre, une chute de tissu : chaque matériau impose sa manière de travailler.',
+    'La fabrication commence rarement par une réponse. Elle demande d’observer les formes, de reprendre les proportions et de comprendre ce que la matière accepte.',
+    'Certains objets gardent la marque de leur fabrication. Un bord irrégulier ou une nuance inattendue peut devenir le détail qui les distingue.',
+    'L’atelier se construit autour de ces choix précis. Les outils restent visibles, rangés à proximité des pièces en cours.',
+    'L’artisan conserve les premiers essais sur une étagère. Ils montrent les erreurs de cuisson et les variations de couleur qui ont conduit à la série définitive.'
+   ]},
+  {arts:[1,5],eyebrow:'CARNET  /  03',title:'Sous les feuillages',deck:'Des serres anciennes aux jardins de ville, observer ce qui pousse.',
+   section:'Le temps des plantes',caption:'Étude botanique, lumière naturelle',
+   paragraphs:[
+    'Derrière les vitres, la chaleur s’accumule dès les premières heures. Les plantes occupent les allées et finissent par effacer les limites de l’architecture.',
+    'Chaque feuille a une manière différente de retenir la lumière. Certaines restent mates, d’autres dessinent des reflets presque métalliques.',
+    'Le jardin évolue sans suivre le rythme des visiteurs. Les branches se déplacent lentement, les fleurs disparaissent et d’autres formes prennent leur place.',
+    'À quelques rues de là, un espace minuscule peut accueillir la même diversité. Tout dépend de l’ombre, de l’eau et de la patience.',
+    'À dix heures, la serre est déjà chaude. Les gouttes d’eau sur les vitres dispersent la lumière et font ressortir le vert plus sombre des feuilles.'
+   ]},
+  {arts:[3,0],eyebrow:'VOYAGE  /  04',title:'Les heures du port',deck:'Un quartier vu depuis ses quais, ses ateliers et ses façades.',
+   section:'La ville au bord de l’eau',caption:'Carnet de voyage, fin d’après-midi',
+   paragraphs:[
+    'À l’arrivée des bateaux, les quais changent de rythme. Les conversations reprennent près des entrepôts, entre les vélos et les caisses empilées.',
+    'La ville porte encore les traces de ses activités anciennes. On les retrouve dans les noms des rues, les ateliers reconvertis et les bâtiments du front de mer.',
+    'Plus loin, les terrasses donnent sur un paysage ouvert. Les couleurs varient avec le vent et la lumière, parfois d’une minute à l’autre.',
+    'Il suffit de quitter les axes fréquentés pour retrouver une autre ambiance : des cours étroites, des portes peintes et des commerces installés depuis des années.',
+    'Au bout du quai, la dernière grue a cessé de fonctionner il y a vingt ans. Elle sert aujourd’hui de repère aux promeneurs comme aux marins.'
+   ]},
+  {arts:[4,2],eyebrow:'DESIGN  /  05',title:'Formes familières',deck:'Pourquoi certains objets traversent les années sans se démoder.',
+   section:'Dessiner pour durer',caption:'Formes, assemblages et détails',
+   paragraphs:[
+    'Une chaise, une lampe, une poignée. Les objets les plus courants sont aussi ceux que nous manipulons sans y penser, parfois plusieurs dizaines de fois par jour.',
+    'Leur dessin est une suite de décisions concrètes : une épaisseur, un rayon, une texture, le poids d’un matériau ou la place laissée à la main.',
+    'Un bon objet n’a pas besoin de se faire remarquer. Il trouve sa place et résiste aux habitudes nouvelles comme aux changements d’intérieur.',
+    'Les détails apparaissent avec l’usage. Un mécanisme souple ou une pièce facile à réparer prennent alors plus d’importance que la nouveauté.',
+    'La simplicité n’est pas l’absence de travail. C’est souvent ce qui reste après les dernières corrections.'
+   ]}
+ ];
+ function compositionFor(m){
+  const {cols,rows,L,T,colW,colGap,rowH,rowGap,d}=m;
+  const pattern=compositionVariant%5;
+  const theme=editorialThemes[(compositionRandom?(compositionVariant*3+Math.floor(m.W/20)):0)%editorialThemes.length];
+  const geom=(c,r,cs,rs)=>({x:L+c*(colW+colGap),y:T+r*(rowH+rowGap),
+     width:cs*colW+(cs-1)*colGap,height:rs*rowH+(rs-1)*rowGap,c,r,cs,rs});
+  const marks=Array.from({length:rows},()=>Array(cols).fill(false));
+  const images=[];let title=null;
+  const canPlace=(c,r,cs,rs)=>c>=0&&r>=0&&cs>0&&rs>0&&c+cs<=cols&&r+rs<=rows&&Array.from({length:rs},(_,rr)=>rr).every(rr=>Array.from({length:cs},(_,cc)=>cc).every(cc=>!marks[r+rr][c+cc]));
+  function reserve(c,r,cs,rs,asImage){if(!canPlace(c,r,cs,rs))return null;
+   for(let rr=r;rr<r+rs;rr++)for(let cc=c;cc<c+cs;cc++)marks[rr][cc]=true;
+   const rect=geom(c,r,cs,rs);if(asImage){rect.art=theme.arts[images.length%theme.arts.length];images.push(rect)}else title=rect;return rect;}
+  if(cols===1&&rows===1){
+    if(view.images&&view.text){
+      // Une composition sur une seule rangée : deux surfaces bien délimitées.
+      const topImage=pattern%2===0,imageHeight=Math.floor((rowH/d)*.38)*d;
+      const height=Math.max(d,Math.min(rowH*.5,imageHeight));
+      if(topImage){images.push({x:L,y:T,width:colW,height,art:theme.arts[0]});
+        title={x:L,y:T+height+d*.4,width:colW,height:Math.max(d,rowH-height-d*.4)}}
+      else {title={x:L,y:T,width:colW,height:Math.max(d,rowH-height-d*.4)};
+        images.push({x:L,y:T+rowH-height,width:colW,height,art:theme.arts[0]})}
+    }else if(view.images){images.push({x:L,y:T,width:colW,height:rowH,art:theme.arts[0]})}
+    else if(view.text){title={x:L,y:T,width:colW,height:rowH}}
+    return {images,title,zones:[],theme,pattern};
+  }
+  if(cols===1){
+    if(pattern%2===0){reserve(0,0,1,1,true);reserve(0,1,1,1,false)}
+    else {reserve(0,0,1,1,false);reserve(0,Math.min(rows-1,2),1,1,true)}
+    if(rows>=5&&pattern===4)reserve(0,rows-2,1,1,true);
+  }else if(rows===1){
+    const artCols=Math.max(1,Math.floor(cols/2));
+    if(pattern%2===0){reserve(0,0,artCols,1,true);reserve(artCols,0,cols-artCols,1,false)}
+    else {reserve(cols-artCols,0,artCols,1,true);reserve(0,0,cols-artCols,1,false)}
+  }else if(cols===2){
+    const h=Math.min(rows,2);
+    switch(pattern){
+     case 0: reserve(0,0,1,h,true);reserve(1,0,1,h,false);if(rows>=4)reserve(1,rows-2,1,1,true);break;
+     case 1: reserve(0,0,2,1,true);reserve(0,1,2,1,false);if(rows>=4)reserve(1,rows-2,1,2,true);break;
+     case 2: reserve(1,0,1,h,true);reserve(0,0,1,h,false);if(rows>=4)reserve(0,rows-1,1,1,true);break;
+     case 3: reserve(0,0,2,1,false);reserve(0,1,2,Math.min(2,rows-1),true);if(rows>=5)reserve(1,rows-1,1,1,true);break;
+     default:reserve(0,0,1,Math.min(3,rows),true);reserve(1,0,1,1,false);if(rows>=4)reserve(1,rows-1,1,1,true);
+    }
+  }else{
+    const left=Math.max(1,Math.min(cols-1,Math.ceil(cols*.55))),right=cols-left;
+    const half=Math.max(1,Math.floor(cols/2));
+    if(rows===2){reserve(0,0,left,1,true);reserve(left,0,right,1,false);if(pattern%2&&cols>3)reserve(cols-half,1,half,1,true)}
+    else switch(pattern){
+     case 0: reserve(0,0,left,2,true);reserve(left,0,right,2,false);if(rows>=5)reserve(cols-Math.max(1,Math.floor(cols/3)),rows-1,Math.max(1,Math.floor(cols/3)),1,true);break;
+     case 1: reserve(0,0,cols,1,true);reserve(0,1,Math.max(2,left),1,false);reserve(cols-Math.max(1,half),2,Math.max(1,half),Math.min(2,rows-2),true);break;
+     case 2: reserve(cols-half,0,half,2,true);reserve(0,0,cols-half,2,false);if(rows>=4)reserve(0,rows-1,Math.max(1,Math.floor(cols/3)),1,true);break;
+     case 3: reserve(0,0,cols,1,false);reserve(0,1,left,Math.min(2,rows-1),true);if(rows>=5)reserve(cols-1,rows-1,1,1,true);break;
+     default:reserve(0,0,Math.max(1,Math.floor(cols/3)),Math.min(3,rows),true);reserve(Math.max(1,Math.floor(cols/3)),0,cols-Math.max(1,Math.floor(cols/3)),1,false);if(rows>=4)reserve(cols-half,rows-2,half,1,true);
+    }
+  }
+  if(!title){
+   outer:for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)if(!marks[r][c]){reserve(c,r,1,1,false);break outer;}
+  }
+  // Chaque interrupteur modifie réellement la répartition des surfaces.
+  // Sans images : les cases qu'elles occupaient redeviennent du texte.
+  // Sans texte : les cases libres, titre compris, deviennent des images.
+  if(!view.images){
+    for(const img of images)for(let rr=img.r;rr<img.r+img.rs;rr++)
+      for(let cc=img.c;cc<img.c+img.cs;cc++)marks[rr][cc]=false;
+    images.length=0;
+  }
+  if(!view.text){
+    if(title?.c!==undefined)for(let rr=title.r;rr<title.r+title.rs;rr++)
+      for(let cc=title.c;cc<title.c+title.cs;cc++)marks[rr][cc]=false;
+    title=null;
+    if(view.images){
+      // Pavage complet : chacun des modules reçoit une image, les gouttières
+      // restent libres sauf lorsqu'une image traverse volontairement des rangées.
+      let artIndex=images.length;
+      for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+        if(marks[r][c])continue;
+        let span=Math.min(cols-c,1+((compositionVariant+r+c)%3));
+        while(span>1&&Array.from({length:span},(_,k)=>k).some(k=>marks[r][c+k]))span--;
+        let rise=((compositionVariant+r+c)%5===0&&r+1<rows)?2:1;
+        if(rise===2&&Array.from({length:span},(_,k)=>k).some(k=>marks[r+1][c+k]))rise=1;
+        for(let rr=r;rr<r+rise;rr++)for(let cc=c;cc<c+span;cc++)marks[rr][cc]=true;
+        const rect=geom(c,r,span,rise);rect.art=theme.arts[artIndex%theme.arts.length];
+        images.push(rect);artIndex++;
+      }
+    }
+  }
+  // On respecte les gouttières entre rangées pour les blocs séparés.
+  // Certaines colonnes de lecture peuvent traverser plusieurs rangées
+  // lorsqu'elles constituent visiblement un seul bloc continu.
+  const areas=[];let active=new Map();
+  for(let r=0;r<=rows;r++){
+   const runs=[];
+   if(r<rows){for(let c=0;c<cols;){if(marks[r][c]){c++;continue}const start=c;while(c<cols&&!marks[r][c])c++;runs.push([start,c-start])}}
+   const next=new Map();
+   for(const [c,cs] of runs){const key=c+':'+cs;const old=active.get(key);if(old){old.rs++;next.set(key,old)}else next.set(key,{c,cs,r,rs:1})}
+   for(const [key,zone] of active)if(!next.has(key))areas.push(zone);
+   active=next;
+  }
+  const zones=[];
+  for(const z of areas){
+   const maxSpan=cols>=5?3:cols>=4?2:1;
+   const continuous=cols===1||!view.images||pattern===0||pattern===2;
+   for(let c=z.c;c<z.c+z.cs;c+=maxSpan){
+     const chunk=Math.min(maxSpan,z.c+z.cs-c);
+     if(continuous)zones.push(geom(c,z.r,chunk,z.rs));
+     else for(let r=z.r;r<z.r+z.rs;r++)zones.push(geom(c,r,chunk,1));
+   }
+  }
+  zones.sort((a,b)=>a.y-b.y||a.x-b.x);
+  return {images,title,zones,theme,pattern};
+ }
+ const measureCanvas=document.createElement('canvas'),measureContext=measureCanvas.getContext('2d');
+ function textWidth(value,size,family,weight){measureContext.font=`${weight} ${size}px ${family}`;return measureContext.measureText(value).width;}
+ function wrapText(str,width,size,family='Georgia,serif',weight=400){
+  const lines=[];let line='';
+  for(const word of str.split(/\s+/)){
+   const attempt=line?line+' '+word:word;
+   if(line&&textWidth(attempt,size,family,weight)>width){lines.push(line);line=word;}
+   else line=attempt;
+  }
+  if(line)lines.push(line);
+  return lines;
+ }
+ function drawWords(group,str,{x,y,width,bottom,size,step,color,family='Georgia,serif',weight=400,max=100,spacing=0}){
+   let count=0;let baseline=y;
+   for(const line of wrapText(str,width,size,family,weight)){
+    if(count>=max||baseline>bottom+1e-7)break;
+    let trimmed=line;
+    while(trimmed.length>1&&textWidth(trimmed,size,family,weight)>width)trimmed=trimmed.slice(0,-1);
+    svgEl(group,'text',{x,y:baseline,fill:color,'font-family':family,'font-weight':weight,'font-size':size,'letter-spacing':spacing},trimmed);
+    count++;baseline+=step;
+   }
+   return {count,nextY:baseline};
+ }
+ function baselineAt(y,T,d){return T+Math.ceil((y-T-1e-8)/d)*d;}
+ const loremParagraphs=[
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non nisl vitae arcu accumsan luctus. Donec gravida, libero et faucibus blandit, nisl orci viverra enim, id volutpat metus ligula vitae massa. Etiam pulvinar vitae nulla id porta.',
+  'Praesent sed erat sed tellus bibendum vulputate. Morbi fermentum, libero vel eleifend consectetur, turpis enim congue eros, vel laoreet lorem neque ac nibh. Quisque vestibulum pretium ipsum, non facilisis urna elementum ac.',
+  'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aliquam pharetra ipsum sed sapien tristique, a viverra ipsum commodo. Suspendisse potenti. Maecenas mattis orci ut nisi eleifend posuere.',
+  'Curabitur dapibus quam sit amet sem vulputate, non interdum urna gravida. Sed mollis consequat mauris, eu tincidunt lacus luctus sed. Nam facilisis est eu augue laoreet tempus. Pellentesque at arcu sed libero faucibus fermentum.',
+  'Fusce ac lorem eu sem interdum tincidunt. Nullam porta lacus sed diam sollicitudin, at congue nulla pretium. Duis viverra, urna ut faucibus posuere, orci velit maximus nulla, et laoreet nunc metus in risus.',
+  'Aenean vitae interdum libero. Mauris malesuada urna ac consequat sodales. Etiam et imperdiet neque. Vivamus consectetur, dui id bibendum vehicula, eros metus tincidunt odio, ut dignissim tellus sem non purus.'
+ ];
+ function fillLorem(group,{x,y,width,bottom,size,step,family,seed=0,color='#373036'}){
+   if(width<=0||y>bottom+1e-8)return 0;
+   let count=0,paragraph=seed,at=baselineAt(y,solution?.T??0,step);
+   // Le texte continue jusqu'à la dernière ligne de base disponible.
+   while(at<=bottom+1e-8&&count<600){
+     const words=wrapText(loremParagraphs[paragraph%loremParagraphs.length],width,size,family);
+     for(const line of words){
+       if(at>bottom+1e-8||count>=600)break;
+       svgEl(group,'text',{x,y:at,fill:color,'font-family':family,'font-size':size,'font-weight':400},line);
+       at+=step;count++;
+     }
+     paragraph++;
+     // Pas de blanc entre les paragraphes : c'est une maquette de densité.
+   }
+   return count;
+ }
+ function rowGuideGeometry(m){
+   const available=m.H-m.T-m.B;
+   const gutter=m.rowGap;
+   const height=(available-(m.rows-1)*gutter)/m.rows;
+   return Array.from({length:m.rows},(_,i)=>{
+     const top=m.T+i*(height+gutter);
+     const idealTop=m.T+i*(m.rowH+gutter);
+     return {row:i+1,start:top,end:top+height,
+       idealStart:idealTop,idealEnd:idealTop+m.rowH,
+       startShift:top-idealTop,endShift:top+height-idealTop-m.rowH};
+   });
+ }
+ function maxGuideShift(m){
+   return Math.max(0,...rowGuideGeometry(m).flatMap(r=>[Math.abs(r.startShift),Math.abs(r.endShift)]));
+ }
+ function writeEditorial(svg,m,plan){
+   const {T,d,gridH}=m,{title,zones,theme}=plan;
+   const bodySize=s.fontPt*PT_MM;
+   const selectedFont=editorialFont(),labelFont=selectedFont.accent,copyFont=selectedFont.copy,headFont=selectedFont.heading;
+   const defs=svgEl(svg,'defs'),clip=svgEl(defs,'clipPath',{id:'textClip'});
+   svgEl(clip,'rect',{x:m.L,y:T,width:m.W-m.L-m.R,height:Math.min(m.H-T,gridH+bodySize*.27)});
+   const group=svgEl(svg,'g',{'clip-path':'url(#textClip)'});
+   if(title){
+     const pad=Math.min(.16,title.width*.003),tx=title.x+pad,tw=Math.max(0,title.width-pad*2),bottom=title.y+title.height;
+     let y=baselineAt(title.y+d,T,d);
+     const eyebrowSize=Math.min(bodySize*.63,Math.max(1.35,tw/20));
+     if(y<bottom){svgEl(group,'text',{x:tx,y,fill:'#a23c66','font-family':labelFont,'font-size':eyebrowSize,'font-weight':700,'letter-spacing':Math.min(.25,eyebrowSize*.06)},theme.eyebrow);y+=d*1.7;}
+     const headSize=Math.min(bodySize*(tw>bodySize*30?3.65:2.8),tw*(selectedFont===editorialFonts[2]?.125:.16),Math.max(bodySize*1.2,title.height*.21));
+     const headStep=Math.max(d,Math.ceil(headSize*1.13/d)*d);
+     y=baselineAt(y+headSize*.78,T,d);
+     const headline=drawWords(group,theme.title,{x:tx,y,width:tw,bottom,size:headSize,step:headStep,color:'#29232a',family:headFont,weight:selectedFont.weight,max:3});
+     y=baselineAt(headline.nextY,T,d);
+     if(y<bottom-d){
+       const deckSize=Math.min(bodySize*1.08,Math.max(bodySize*.8,tw/23));
+       const deck=drawWords(group,theme.deck,{x:tx,y,width:tw,bottom,size:deckSize,step:d,color:'#78616d',family:copyFont,weight:400,max:3});
+       y=deck.nextY+d*.1;
+     }
+     fillLorem(group,{x:tx,y:baselineAt(y,T,d),width:tw,bottom,size:bodySize,step:d,family:copyFont,seed:compositionVariant});
+   }
+   zones.forEach((box,i)=>{
+     const pad=Math.min(.15,box.width*.003),x=box.x+pad,w=box.width-pad*2,bottom=box.y+box.height;
+     if(w<=bodySize*3||box.height<d*1.2)return;
+     let y=baselineAt(box.y+d,T,d);
+     // Un intertitre ponctuel, mais pas un intertitre dans chaque module.
+     if(i%5===0&&box.height>=d*8&&w>bodySize*12){
+       const csize=Math.min(bodySize*.64,w/11);
+       drawWords(group,theme.section.toUpperCase(),{x,y,width:w,bottom:y+d*.15,size:csize,step:d,color:'#a23c66',family:labelFont,weight:700,max:1});
+       y+=d;
+     }
+     fillLorem(group,{x,y,width:w,bottom,size:bodySize,step:d,family:copyFont,seed:i+compositionVariant});
+   });
+   const fy=Math.min(m.H-1.9,m.H-m.B*.35);
+   if(fy>T+gridH+d*.2&&m.B>4){
+     svgEl(svg,'text',{x:m.W-m.R,y:fy,'text-anchor':'end',fill:'#756c75','font-family':labelFont,'font-size':Math.max(1.7,bodySize*.52)},String(24+compositionVariant%40).padStart(2,'0'));
+   }
+ }
+
+ function syncZoomPaper(){
+   const original=$('paper'),zoom=$('zoomPaper');
+   zoom.replaceChildren(...Array.from(original.children,child=>child.cloneNode(true)));
+   for(const node of zoom.querySelectorAll('[id]'))node.id='zoom-'+node.id;
+   for(const node of zoom.querySelectorAll('[clip-path]')){
+     const v=node.getAttribute('clip-path');
+     if(v?.startsWith('url(#'))node.setAttribute('clip-path',v.replace('url(#','url(#zoom-'));
+   }
+ }
+ function draw(m){const svg=$('paper');svg.replaceChildren();const W=Math.max(20,s.pageW),H=Math.max(20,s.pageH);svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svgEl(svg,'rect',{width:W,height:H,fill:'#fff'});
+  if(!m){lastComposition=null;svgEl(svg,'text',{x:W/2,y:H/2,'text-anchor':'middle','font-size':Math.min(W/16,10),fill:'#a33a62'},'Grille incompatible');syncZoomPaper();return}
+  const {T,B,L,R,d,gridH,rowH,rowGap,rows,cols,colW,colGap,n,reserve}=m;const x2=W-R,y2=T+gridH,w=W-L-R,stroke=Math.max(.13,W/850);
+  // Outside margin zone.
+  for(const [x,y,ww,hh] of [[0,0,W,T],[0,H-B,W,B],[0,T,L,H-T-B],[x2,T,R,H-T-B]])if(ww>0&&hh>0)svgEl(svg,'rect',{x,y,width:ww,height:hh,fill:'#ffedf4'});
+  if(reserve>1e-7){
+   // Cette bande est dans la zone de composition mais pas dans la grille.
+   svgEl(svg,'rect',{x:L,y:y2,width:w,height:reserve,fill:'#e9e5e9'});
+   svgEl(svg,'line',{x1:L,x2:x2,y1:y2,y2:y2,stroke:'#8a6580','stroke-width':stroke*.7,'stroke-dasharray':`${stroke*3} ${stroke*3}`});
+  }
+  for(let j=0;j<rows;j++){const y=T+j*(rowH+rowGap);if(view.rows){
+    if(shape==='square'){for(let c=0;c<cols;c++)svgEl(svg,'rect',{x:L+c*(colW+colGap),y,width:colW,height:rowH,fill:(j+c)%2?'#f9f3f8':'#fbe9f2',stroke:'#d77fa9','stroke-width':stroke*.7})}
+    else svgEl(svg,'rect',{x:L,y,width:w,height:rowH,fill:j%2?'#f7f5f9':'#fbfaff'});
+    if(j<rows-1&&rowGap>0)svgEl(svg,'rect',{x:L,y:y+rowH,width:w,height:rowGap,fill:'#fff1e2'})}}
+  const plan=compositionFor(m);
+  $('fontKind').textContent=editorialFont().label;
+  lastComposition={pattern:plan.pattern,theme:plan.theme.title,images:plan.images.map(({x,y,width,height,c,r,cs,rs})=>({x,y,width,height,c,r,cs,rs})),title:plan.title?{...plan.title}:null,zones:plan.zones.map(z=>({...z})),view:{text:view.text,images:view.images}};
+  if(view.images)for(const [idx,r] of plan.images.entries()){
+    // The artwork is 800 × 1000. Scale up to fill, then clip to the exact grid module.
+    const imageId=`imageClip-${idx}`;
+    const defs=svgEl(svg,'defs');const clip=svgEl(defs,'clipPath',{id:imageId});
+    svgEl(clip,'rect',{x:r.x,y:r.y,width:r.width,height:r.height});
+    const fit=Math.max(r.width/800,r.height/1000),fw=800*fit,fh=1000*fit;
+    const imageGroup=svgEl(svg,'g',{'clip-path':`url(#${imageId})`});
+    svgEl(imageGroup,'image',{
+      x:r.x+(r.width-fw)/2,y:r.y+(r.height-fh)/2,width:fw,height:fh,
+      href:sampleImages[r.art],preserveAspectRatio:'xMidYMid meet',
+      'data-fit':'cover','data-frame-x':r.x,'data-frame-y':r.y,
+      'data-frame-width':r.width,'data-frame-height':r.height
+    });
+    if(view.text&&r.height>12&&r.width>25){
+      const label=svgEl(svg,'g',{}),labelH=Math.min(6,r.height*.18);
+      svgEl(label,'rect',{x:r.x,y:r.y+r.height-labelH,width:Math.min(r.width,r.width*.67),height:labelH,fill:'#252127',opacity:.77});
+      const captionSize=Math.min(1.8,labelH*.28);const maxCaptionW=Math.min(r.width,r.width*.67)-3;const caption=plan.theme.caption.toUpperCase();let displayed=caption;while(displayed.length>5&&textWidth(displayed,captionSize,'Arial,Helvetica,sans-serif',500)>maxCaptionW)displayed=displayed.slice(0,-2);if(displayed!==caption)displayed=displayed.trim()+'…';svgEl(label,'text',{x:r.x+1.7,y:r.y+r.height-labelH*.29,fill:'#fff9fb','font-family':'Arial,Helvetica,sans-serif','font-size':captionSize,'letter-spacing':.07},displayed);
+    }
+  }
+  if(view.text)writeEditorial(svg,m,plan);
+  // Les repères se superposent à la composition sans modifier ses dimensions.
+  if(view.grid)for(let j=0;j<=Math.min(n,1400);j++){
+    const y=T+j*d;svgEl(svg,'line',{x1:L,x2:x2,y1:y,y2:y,stroke:'#63a8db','stroke-width':stroke,opacity:(view.text||view.images)?.42:.7})
+  }
+  if(view.rows){
+   const guides=rowGuideGeometry(m),shifted=maxGuideShift(m)>1e-6;
+   for(const row of guides){
+     if(shifted)for(const yy of [row.idealStart,row.idealEnd])
+       svgEl(svg,'line',{x1:L,x2:x2,y1:yy,y2:yy,stroke:'#89858d','stroke-width':stroke*.8,'stroke-dasharray':`${stroke*2} ${stroke*2}`,'data-guide':'ideal'});
+     for(const yy of [row.start,row.end])
+       svgEl(svg,'line',{x1:L,x2:x2,y1:yy,y2:yy,stroke:'#dd8b43','stroke-width':stroke*1.8,'data-guide':'indesign'});
+   }
+   for(let c=1;c<cols;c++){const x=L+c*colW+(c-1)*colGap;for(const xx of [x,x+colGap])svgEl(svg,'line',{x1:xx,y1:T,x2:xx,y2:T+gridH+reserve,stroke:'#9e80d7','stroke-width':stroke*1.5,'stroke-dasharray':`${Math.max(1,d/2)} ${Math.max(1,d/3)}`})}}
+
+  svgEl(svg,'rect',{x:L,y:T,width:w,height:H-T-B,stroke:'#e95493','stroke-width':stroke*2,fill:'none'});
+  syncZoomPaper();
+ }
+ function setOut(id,val){$(id).textContent=val}
+ // Le grossissement sert à contrôler la distance aux lignes de base et aux repères.
+ const viewport=$('pageViewport'),lens=$('zoomLens'),zoomPaper=$('zoomPaper');
+ let pinnedTouch=false,lastZoomPointer=null;
+ function hideZoom(){lens.classList.remove('visible')}
+ function pointOnPage(e){
+  const bounds=$('paper').getBoundingClientRect();
+  const W=Math.max(20,s.pageW),H=Math.max(20,s.pageH);
+  const scale=Math.min(bounds.width/W,bounds.height/H);
+  const actualW=W*scale,actualH=H*scale;
+  const x0=bounds.left+(bounds.width-actualW)/2,y0=bounds.top+(bounds.height-actualH)/2;
+  const px=e.clientX-x0,py=e.clientY-y0;
+  if(px<0||py<0||px>actualW||py>actualH)return null;
+  return {x:px/scale,y:py/scale,scale};
+ }
+ function inspectionGuides(p,region){
+  zoomPaper.querySelector('#zoom-inspection')?.remove();
+  if(!solution)return;
+  const m=solution,group=svgEl(zoomPaper,'g',{id:'zoom-inspection','pointer-events':'none'});
+  const stroke=Math.max(.045,region/360);
+  // Visible even when the grid has been hidden in the main preview.
+  for(let i=0;i<=m.n;i++){
+   const y=m.T+i*m.d;
+   if(y<p.y-region*.55||y>p.y+region*.55)continue;
+   svgEl(group,'line',{x1:m.L,x2:m.W-m.R,y1:y,y2:y,stroke:'#2789ce','stroke-width':stroke*1.3,opacity:.95});
+  }
+  for(const row of rowGuideGeometry(m)){
+   if(m.reserve>1e-7)for(const yy of [row.idealStart,row.idealEnd])
+     if(yy>p.y-region*.55&&yy<p.y+region*.55)
+       svgEl(group,'line',{x1:m.L,x2:m.W-m.R,y1:yy,y2:yy,stroke:'#666a70','stroke-width':stroke*1.4,'stroke-dasharray':`${stroke*2} ${stroke*2}`,opacity:.9});
+   for(const yy of [row.start,row.end])if(yy>p.y-region*.55&&yy<p.y+region*.55)
+     svgEl(group,'line',{x1:m.L,x2:m.W-m.R,y1:yy,y2:yy,stroke:'#c45e19','stroke-width':stroke*2.7,opacity:1});
+  }
+  for(let i=1;i<m.cols;i++){
+   const x=m.L+i*m.colW+(i-1)*m.colGap;
+   for(const xx of [x,x+m.colGap])if(xx>p.x-region*.55&&xx<p.x+region*.55)
+    svgEl(group,'line',{x1:xx,y1:m.T,x2:xx,y2:m.T+m.gridH,stroke:'#9972bc','stroke-width':stroke*1.8,opacity:.88});
+  }
+  // Pointer crosshair and its closest real baseline.
+  const nearest=Math.max(0,Math.min(m.n,Math.round((p.y-m.T)/m.d)));
+  const y=m.T+nearest*m.d;
+  svgEl(group,'line',{x1:p.x-region*.5,x2:p.x+region*.5,y1:y,y2:y,stroke:'#0054b6','stroke-width':stroke*2.6});
+  svgEl(group,'line',{x1:p.x,y1:p.y-region*.075,x2:p.x,y2:p.y+region*.075,stroke:'#22252b','stroke-width':stroke*.85,'stroke-dasharray':`${stroke*2} ${stroke*3}`});
+  svgEl(group,'circle',{cx:p.x,cy:p.y,r:stroke*2.3,fill:'#fff',stroke:'#252525','stroke-width':stroke});
+  const distance=Math.abs(p.y-y);
+  const nearby=rowGuideGeometry(m).flatMap(r=>[
+    {y:r.start,delta:r.startShift,row:r.row,side:'haut'},
+    {y:r.end,delta:r.endShift,row:r.row,side:'bas'}
+  ]).sort((a,b)=>Math.abs(a.y-p.y)-Math.abs(b.y-p.y))[0];
+  const fmt=v=>Number(v.toFixed(3)).toLocaleString('fr-FR',{maximumFractionDigits:3});
+  if(nearby&&Math.abs(nearby.y-p.y)<Math.max(m.d*.8,region*.15)){
+    $('zoomValue').textContent=`Rangée ${nearby.row}, ${nearby.side} · décalage ${fmt(nearby.delta)} mm`;
+  }else $('zoomValue').textContent=`Ligne de base · distance ${fmt(distance)} mm`;
+ }
+ function showZoom(e){
+  if(!zoomEnabled)return false;
+  const p=pointOnPage(e);
+  if(!p){hideZoom();return false}
+  lastZoomPointer={clientX:e.clientX,clientY:e.clientY};
+  const stage=viewport.getBoundingClientRect(),size=lens.offsetWidth||192;
+  const localX=e.clientX-stage.left,localY=e.clientY-stage.top;
+  const left=Math.max(5,Math.min(stage.width-size-5,localX+20));
+  const top=Math.max(5,Math.min(stage.height-size-5,localY-size*.5));
+  lens.style.left=left+'px';lens.style.top=top+'px';
+  const region=size/(4*p.scale);
+  zoomPaper.setAttribute('viewBox',`${p.x-region/2} ${p.y-region/2} ${region} ${region}`);
+  inspectionGuides(p,region);
+  lens.classList.add('visible');return true;
+ }
+ viewport.addEventListener('pointermove',e=>{
+  if(!zoomEnabled)return;
+  if(e.pointerType==='mouse'||e.pointerType==='pen'||pinnedTouch)showZoom(e);
+ });
+ viewport.addEventListener('pointerleave',e=>{if(e.pointerType!=='touch')hideZoom()});
+ viewport.addEventListener('pointerdown',e=>{
+  if(!zoomEnabled||e.pointerType==='mouse')return;
+  pinnedTouch=!pinnedTouch;
+  if(pinnedTouch)showZoom(e);else hideZoom();
+ });
+ $('toggleZoom').addEventListener('click',()=>{
+  zoomEnabled=!zoomEnabled;
+  viewport.classList.toggle('zoom-enabled',zoomEnabled);
+  $('toggleZoom').setAttribute('aria-pressed',String(zoomEnabled));
+  if(!zoomEnabled){pinnedTouch=false;lastZoomPointer=null;hideZoom()}
+  else if(lastZoomPointer)showZoom(lastZoomPointer);
+ });
+ window.addEventListener('blur',hideZoom);
+
+ function update(){const result=solve();solution=result.ok?result.selected:null;options=result.ok?result.options:[];
+ 
+ document.querySelectorAll('[data-calculation]').forEach(b=>{const active=b.dataset.calculation===calculationMode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
+  const showTolerance=calculationMode==='simple'&&shape!=='square';$('toleranceRow').hidden=!showTolerance;$('toleranceHelp').hidden=!showTolerance;
+  $('calculationNote').hidden=true;$('reserveRow').hidden=true;$('guideExplain').textContent='';$('idealLegend').hidden=true;
+  populateLeading(result);refreshModes();refreshMarginBand(result);
+  const label=selectedExample==='trade-book'?'6 × 9 pouces':format==='letter'?'US Letter':format==='art240'?'24 × 32 cm':format==='B4'?'B4 ISO':format==='custom'?'Personnalisé':format;
+  $('facingRow').hidden=!['a5-book','trade-book','artbook-240','b4-magazine','a4-magazine'].includes(selectedExample);
+  $('pageInfo').textContent=`${label} · ${orientation==='portrait'?'portrait':'paysage'} · ${clean(s.pageW,3)} × ${clean(s.pageH,3)} mm`;
+  const status=$('status'),pill=$('stageStatus');const ok=result.ok;status.classList.toggle('error',!ok);pill.classList.toggle('error',!ok);pill.textContent=ok?'Grille OK':'Incompatible';status.hidden=ok;$('copy').disabled=!ok;
+  if(!ok){status.textContent=result.message;if(result.fix){const b=document.createElement('button');b.className='fix-btn';b.type='button';b.textContent=result.fix==='balanced'?'Utiliser Haut / Bas égaux':'Passer aux marges automatiques';b.addEventListener('click',()=>{if(result.fix==='balanced')distribution='balanced';else marginMode='auto';autoK=null;refreshFields();update()});status.append(b)}$('shapeNote').textContent='Pas de module carré avec ces réglages.';['outTop','outBottom','outInside','outOutside','outFont','outLeading','outRows','outRowGap','outCols','outColGap','outStep'].forEach(id=>setOut(id,'—'));setOut('outFormat',label);$('typeHint').textContent='';$('mathExplain').textContent='';draw(null);return}
+  const m=result.selected,automatic=marginMode!=='auto';
+  if(shape==='square'){$('shapeNote').innerHTML=`Côté <strong>${fmtDim(m.rowH)}</strong> <span class="auto-badge small">AUTO</span> · ${m.k} pas`;}else $('shapeNote').textContent='';
+  $('typeHint').textContent=m.lead<s.fontPt?'Interlignage inférieur au corps.':automatic?'':'';
+  if(marginMode==='auto'){let marginText=distribution==='balanced'||distribution==='all-equal'?`Marges calculées. ${clean(m.k,0)} pas par rangée.`:'Marges calculées. Vérifie la marge ajustée.';if(shape==='square'&&m.L/s.pageW>.25){marginText='Marges latérales larges. Essaie plus de colonnes.';status.hidden=false}status.textContent=marginText}
+  else status.textContent=marginMode==='zero'?'0 mm sur les quatre côtés.':marginMode==='indesign'?'12,7 mm sur les quatre côtés.':'Marges fixes.';
+  $('idealLegend').hidden=m.reserve<=1e-7;
+  if(m.reserve>1e-7){
+   const shift=maxGuideShift(m);
+   const visibleShift=`≈ ${clean(toUnit(shift),3)} ${unit}`;
+   $('calculationNote').textContent=`Repères « Aux marges » : écart jusqu’à ${visibleShift}. Pour un alignement parfait, place les repères horizontaux manuellement.`;
+   $('calculationNote').hidden=false;
+   $('reserveRow').hidden=false;
+   setOut('outReserve',visibleShift);
+   // Les rangées du dialogue « Créer des repères » sont distribuées sur toute
+   // la hauteur entre les marges : elles ne seraient plus sur la grille.
+   const positions=[];
+   for(let j=0;j<m.rows;j++){
+    const y=m.T+j*(m.rowH+m.rowGap);
+    positions.push(`${fmtDim(y)} / ${fmtDim(y+m.rowH)}`);
+   }
+   $('guideExplain').textContent=`Pour un alignement exact, placer les repères horizontaux aux positions suivantes depuis le haut de page (début / fin de rangée) : ${positions.join(' ; ')}. « Créer des repères > Aux marges » répartit sinon l’écart entre les rangées.`;
+   setOut('outGuideAlign','Aux marges · décalage');
+  }else setOut('outGuideAlign','Aux marges');
+  setOut('outFormat',format==='custom'?`${resultDim(s.pageW)} × ${resultDim(s.pageH)}`:label);
+  setOut('outTop',resultDim(m.T));setOut('outBottom',resultDim(m.B));setOut('outInside',resultDim(m.L));setOut('outOutside',resultDim(m.R));
+  setOut('outFont',resultPt(s.fontPt));setOut('outLeading',resultPt(m.lead));setOut('outStep',resultPt(m.lead));
+  setOut('outRows',String(m.rows));setOut('outRowGap',resultPt(s.rowGapSteps*m.lead));setOut('outCols',String(m.cols));setOut('outColGap',columnSnap?resultPt(s.colGapSteps*m.lead):resultDim(m.colGap));
+  $('mathExplain').textContent=`${s.rows} rangées × ${m.k} pas + ${s.rows-1} gouttières × ${s.rowGapSteps} pas = ${m.n} pas. Hauteur : ${fmtDim(m.gridH)}. Pas de grille : ${fmtPt(m.lead)}.${m.reserve>1e-7?` Réserve : ${fmtDim(m.reserve)}.`:''}${shape==='square'?` Modules carrés : ${fmtDim(m.colW)} × ${fmtDim(m.rowH)}.`:''}`;
+  draw(m);
+ }
+ function parseText(v){if(typeof v!=='string')return null;const normalized=v.trim().replace(',','.');if(!/^\d+(?:\.\d+)?$/.test(normalized))return null;const n=Number(normalized);return Number.isFinite(n)?n:null}
+ function applyValue(id,n){markCustom();s[id]=mmIds.has(id)?fromUnit(n):n;if(id==='pageW'||id==='pageH'){format='custom';if(marginMode==='auto'&&density!=='custom')presetDensity(density)}if(id==='target'||id==='horizontal')density='custom';if(marginMode!=='auto')autoK=null;refreshModes();update()}
+ function nextNumber(id,dir){const [lower,upper]=bounds[id],cur=mmIds.has(id)?toUnit(s[id]):s[id];const step=id==='fontPt'?1:id==='leadingPt'?.5:intIds.has(id)?1:(id==='pageW'||id==='pageH')?1:.5;
+  const lowerShown=mmIds.has(id)?toUnit(lower):lower,upperShown=mmIds.has(id)?toUnit(upper):upper;
+  const v=Number((cur+step*dir).toPrecision(14));return v<lowerShown-1e-10||v>upperShown+1e-10?null:v}
+ for(const id of nIds){const input=$(id);
+  input.addEventListener('input',()=>{const v=parseText(input.value),[lo,hi]=bounds[id],physical=mmIds.has(id)?(v===null?NaN:fromUnit(v)):v;
+   if(v===null||physical<lo||physical>hi||(intIds.has(id)&&!Number.isInteger(v))){input.classList.add('invalid');return}
+   input.classList.remove('invalid');applyValue(id,v);
+  });
+  input.addEventListener('keydown',e=>{if(!['ArrowUp','ArrowDown'].includes(e.key))return;e.preventDefault();const v=nextNumber(id,e.key==='ArrowUp'?1:-1);if(v===null)return;input.value=inputVal(v);input.classList.remove('invalid');applyValue(id,v)});
+  input.addEventListener('blur',()=>{input.value=fieldVal(id);input.classList.remove('invalid')});
+ }
+ document.querySelectorAll('[data-example]').forEach(b=>b.addEventListener('click',()=>applyExample(b.dataset.example)));
+ $('showAllLeading').addEventListener('click',()=>{showAllLeading=!showAllLeading;update()});
+ $('leadingChoices').addEventListener('change',()=>{const k=Number($('leadingChoices').value);if(options.some(x=>x.k===k)){autoK=k;update()}});
+ $('format').addEventListener('change',()=>{markCustom();format=$('format').value;if(presets[format]){let [w,h]=presets[format];if(orientation==='landscape')[w,h]=[h,w];s.pageW=w;s.pageH=h;if(marginMode==='auto'&&density!=='custom')presetDensity(density)}refreshFields();update()});
+ for(const o of ['portrait','landscape'])$(o).addEventListener('click',()=>{if(orientation!==o){markCustom();orientation=o;[s.pageW,s.pageH]=[s.pageH,s.pageW];if(marginMode==='auto'&&density!=='custom')presetDensity(density);refreshFields();update()}});
+ for(const u of ['mm','pt'])$(u).addEventListener('click',()=>{unit=u;refreshFields();update()});
+ document.querySelectorAll('[data-shape]').forEach(el=>el.addEventListener('click',()=>{markCustom();shape=el.dataset.shape;autoK=null;showAllLeading=false;refreshModes();update()}));
+ document.querySelectorAll('[data-mode]').forEach(el=>el.addEventListener('click',()=>{markCustom();marginMode=el.dataset.mode;autoK=null;showAllLeading=false;refreshModes();update()}));
+ document.querySelectorAll('[data-density]').forEach(el=>el.addEventListener('click',()=>{markCustom();presetDensity(el.dataset.density);refreshFields();update()}));
+ $('distribution').addEventListener('change',()=>{markCustom();distribution=$('distribution').value;refreshModes();update()});
+ $('columnSnap').addEventListener('change',()=>{markCustom();columnSnap=$('columnSnap').checked;if(!columnSnap){s.colGap=s.colGapSteps*(solution?.lead??s.leadingPt)*PT_MM}else{s.colGapSteps=Math.max(0,Math.round(s.colGap/((solution?.lead??s.leadingPt)*PT_MM)))}refreshFields();update()});
+ $('reset').addEventListener('click',()=>{zoomEnabled=false;pinnedTouch=false;hideZoom();viewport.classList.remove('zoom-enabled');$('toggleZoom').setAttribute('aria-pressed','false');compositionVariant=0;compositionRandom=false;$('shuffleComposition').setAttribute('aria-pressed','false');markCustom();maxGapMM=0.05;$('gapThreshold').value='0.05';s=defaults();format='A4';orientation='portrait';unit='mm';marginMode='indesign';density='balanced';distribution='balanced';columnSnap=true;shape='free';autoK=null;showAllLeading=false;isReset=true;refreshFields();update()});
+ $('shuffleComposition').addEventListener('click',()=>{compositionVariant++;compositionRandom=true;draw(solution)});
+ for(const [id,key] of [['toggleGrid','grid'],['toggleRows','rows'],['toggleText','text'],['toggleImages','images']])$(id).addEventListener('click',()=>{view[key]=!view[key];$(id).setAttribute('aria-pressed',String(view[key]));draw(solution)});
+ document.querySelectorAll('[data-calculation]').forEach(b=>b.addEventListener('click',()=>{calculationMode=b.dataset.calculation;update()}));
+ $('gapThreshold').addEventListener('input',()=>{const v=Number($('gapThreshold').value.replace(',','.'));if($('gapThreshold').value!==''&&Number.isFinite(v)&&v>=0&&v<=3){maxGapMM=v;update()}});
+ $('gapThreshold').addEventListener('blur',()=>{$('gapThreshold').value=String(maxGapMM)});
+ $('copy').addEventListener('click',async()=>{if(!solution)return;const precise={top:fmtDim(solution.T),bottom:fmtDim(solution.B),inside:fmtDim(solution.L),outside:fmtDim(solution.R),font:fmtPt(s.fontPt),leading:fmtPt(solution.lead),rowGap:fmtPt(s.rowGapSteps*solution.lead),colGap:columnSnap?fmtPt(s.colGapSteps*solution.lead):fmtDim(solution.colGap),step:fmtPt(solution.lead),format:format==='custom'?`${fmtDim(s.pageW)} × ${fmtDim(s.pageH)}`:$('outFormat').textContent};const lines=[
+  'TYPOGRILLE — RÉGLAGES INDESIGN',
+  `Format de document : ${precise.format}`,
+  `Marges : De tête ${precise.top} ; De pied ${precise.bottom} ; Petit fond ${precise.inside} ; Grand fond ${precise.outside}`,
+  ...($('facingRow').hidden?[]:['Pages en vis-à-vis : activées']),
+  `Caractère : Corps ${precise.font} ; Interlignage ${precise.leading}`,
+  `Créer des repères : Rangées Nombre ${solution.rows} ; Gouttière ${precise.rowGap} ; Colonnes Nombre ${solution.cols} ; Gouttière ${precise.colGap} ; Ajuster les repères Aux marges`,
+  ...(solution.reserve>1e-7?[
+   `Décalage maximal des rangées créées automatiquement : ${fmtDim(maxGuideShift(solution))} (les marges restent inchangées)`,
+   `Repères horizontaux à placer depuis le haut de la page : ${Array.from({length:solution.rows},(_,i)=>{
+      const y=solution.T+i*(solution.rowH+solution.rowGap);return `${fmtDim(y)} / ${fmtDim(y+solution.rowH)}`;
+     }).join(' ; ')}`
+  ]:[]),
+  `Préférences > Grilles : Début 0 pt ; Relative à Marge supérieure ; Pas ${precise.step}`,
+  'Paragraphe : Aligner sur la grille de ligne de base'
+ ].join('\n');let ok=false;try{await navigator.clipboard.writeText(lines);ok=true}catch(err){}
+ if(!ok){const a=document.createElement('textarea');a.value=lines;document.body.append(a);a.select();ok=document.execCommand('copy');a.remove()}
+ const b=$('copy');b.textContent=ok?'Copié':'Copie impossible';setTimeout(()=>b.textContent='Copier les valeurs',1800)
+ });
+ refreshFields();update();
+ window.typogrilleCompositionDebug=()=>({variant:compositionVariant,random:compositionRandom,font:editorialFont().label,plan:lastComposition,guideRows:solution?rowGuideGeometry(solution):[]});
+ if(document.fonts)document.fonts.ready.then(()=>{if(solution)draw(solution)}).catch(()=>{});
+ window.typogrilleDebug=()=>({shape,mode:marginMode,calculationMode,maxGapMM,density,format,unit,autoK,selectedExample,settings:{...s},solution:solution?{...solution}:null,options:options.map(x=>({k:x.k,lead:x.lead,cost:x.cost}))});
+})();
+</script>
+</body></html>
